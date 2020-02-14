@@ -1,0 +1,27 @@
+{
+  "name": "reimagined-results",
+  "version": "1.0.0",
+  "description": "Project #2: App TBD",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fguzmanrs/reimagined-results.git"
+  },
+  "author": "Emily Yu, Fabiola Guzman, Francisco Ortiz, Hayden Cross",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fguzmanrs/reimagined-results/issues"
+  },
+  "homepage": "https://github.com/fguzmanrs/reimagined-results#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.2"
+  }
+}
