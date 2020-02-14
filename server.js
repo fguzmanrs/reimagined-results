@@ -11,7 +11,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Requiring our models for syncing
-var db = require("./models");
+// var db = require("./models");
 
 // Body parser
 app.use(express.json());
@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
 // APIs
-app.use("/api/movie", movieRouter);
+app.use("/api/movies", movieRouter);
 // app.use("/api/user", userRouter);
 // app.use("/api/review", reviewRouter);
 
@@ -35,9 +35,12 @@ app.use("/api/movie", movieRouter);
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
-db.sequelize.sync().then(function() {
-  console.info("Sequelize: sync()");
-  app.listen(PORT, function() {
-    console.info("App listening on PORT " + PORT);
-  });
+// db.sequelize.sync().then(function() {
+//   console.info("Sequelize: sync()");
+//   app.listen(PORT, function() {
+//     console.info("App listening on PORT " + PORT);
+//   });
+// });
+app.listen(PORT, function() {
+  console.info("App listening on PORT " + PORT);
 });

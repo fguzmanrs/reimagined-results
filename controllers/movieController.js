@@ -2,55 +2,59 @@
 const axios = require("axios");
 const catchAsync = require("../utill/catchAsync");
 
-exports.getRecentMovies = async (req, res) => {
+exports.getRecentMovies = catchAsync(async (req, res, next) => {
   const tmdbEndpoint = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`;
 
-  const movies = await axios({
-    method: "get",
-    url: tmdbEndpoint
-  });
+  const movies = await axios(tmdbEndpoint);
 
   res.status(200).json({
-    status: "sucess",
+    status: "success",
     length: movies.data.results.length,
     data: movies.data.results
   });
-};
+});
 
-exports.getMovieDetail = async (req, res) => {
-  const movieId = req.params.movieId;
-  const tmdbEndpoint = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.TMDB_API_KEY}&language=en-US`;
+exports.getMovieDetail = catchAsync(async (req, res, next) => {
+  const movieId = req.params.id;
+  const tmdbDetail = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.TMDB_API_KEY}&language=en-US`;
+  const tmdbKeyword = `https://api.themoviedb.org/3/movie/${movieId}/keywords?api_key=${process.env.TMDB_API_KEY}`;
+  const detail = await axios(tmdbDetail);
+  const keyword = await axios(tmdbKeyword);
 
-  const info = await axios({
-    method: "get",
-    url: tmdbEndpoint
-  });
+  detail.data.keywords = keyword.data.keywords;
 
   res.status(200).json({
-    status: "sucess",
-    length: info.data.results.length,
-    data: info.data.results
+    status: "success",
+    data: detail.data
   });
-};
+});
 
-exports.getProviders = async function(req, res) {
-  axios({
+exports.getProviders = catchAsync(async function(req, res, next) {
+  const movieToSearch = req.params.movieTitle;
+
+  const movies = await axios({
     method: "GET",
-    url: "https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/lookup",
+    url:
+      "https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/lookup",
     headers: {
       "content-type": "application/octet-stream",
-      "x-rapidapi-host": "utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com",
-      "x-rapidapi-key": utellyApiKey
+      "x-rapidapi-host":
+        "utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com",
+      "x-rapidapi-key": process.env.UTELLY_API_KEY
     },
     params: {
-      term: "bojack",
-      country: "uk"
+      term: movieToSearch,
+      country: "us"
     }
-  })
-    .then(response => {
-      console.log(response);
-    })
-    .catch(error => {
-      console.log(error);
-    });
-};
+  });
+
+  // Filter the movies having the exact same name with the search term
+  const filteredMovie = movies.data.results.filter(
+    el => el.name.toLowerCase() === movieToSearch.toLowerCase()
+  );
+
+  res.status(200).json({
+    status: "success",
+    data: filteredMovie
+  });
+});
