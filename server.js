@@ -4,9 +4,11 @@ const axios = require("axios");
 
 require("dotenv").config();
 
+const app = express();
 const PORT = process.env.PORT || 3000;
 
-const app = express();
+// Requiring our models for syncing
+var db = require("./models");
 
 // Body parser
 app.use(express.json());
@@ -44,7 +46,16 @@ app.get("/");
 //   res.send("hello");
 // });
 
-app.listen(PORT, err => {
-  if (err) throw err;
-  console.log("Listening...");
+// app.listen(PORT, err => {
+//   if (err) throw err;
+//   console.log("Listening...");
+// });
+
+// Syncing our sequelize models and then starting our Express app
+// =============================================================
+db.sequelize.sync().then(function() {
+  console.info("Sequelize: sync()");
+  app.listen(PORT, function() {
+    console.info("App listening on PORT " + PORT);
+  });
 });
