@@ -1,4 +1,3 @@
-// Handlers
 const axios = require("axios");
 const catchAsync = require("../utill/catchAsync");
 
@@ -41,12 +40,10 @@ exports.getProviders = catchAsync(async function(req, res, next) {
 
   const movies = await axios({
     method: "GET",
-    url:
-      "https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/lookup",
+    url: "https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/lookup",
     headers: {
       "content-type": "application/octet-stream",
-      "x-rapidapi-host":
-        "utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com",
+      "x-rapidapi-host": "utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com",
       "x-rapidapi-key": process.env.UTELLY_API_KEY
     },
     params: {
