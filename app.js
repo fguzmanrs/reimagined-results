@@ -18,4 +18,7 @@ app.use("/api/movies", movieRouter);
 app.use("/api/users", userRouter);
 app.use("/api/reviews", reviewRouter);
 
+// Global Error Handler: work on later
+app.use("/", (err, req, res, next) => {});
+
 module.exports = app;
