@@ -10,7 +10,7 @@ const utellyApiKey = process.env.utellyApiKey;
 
 //! APIs
 // 1. to get the latest popular movies(1 year) for landing page movies
-// used api: TMDB - discover  > movie discover
+// used api: TMDB - discover > movie discover
 router.get("/recent", movieController.getRecentMovies);
 
 // 2. to get movie details(general info, genre, keywords)
@@ -23,5 +23,9 @@ router.get("/providers/:movieTitle", movieController.getProviders);
 
 // 4. to recommend movies
 // used api: TMDB - discover > movie discover with user's the most hitted genre, keyword
+router.get(
+  "/recommend/:genreIds/:keywordIds",
+  movieController.getRecommendation
+);
 
 module.exports = router;

@@ -3,9 +3,9 @@ const axios = require("axios");
 const catchAsync = require("../utill/catchAsync");
 
 exports.getRecentMovies = catchAsync(async (req, res, next) => {
-  const tmdbEndpoint = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`;
+  const tmdbUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`;
 
-  const movies = await axios(tmdbEndpoint);
+  const movies = await axios(tmdbUrl);
 
   res.status(200).json({
     status: "success",
@@ -16,10 +16,10 @@ exports.getRecentMovies = catchAsync(async (req, res, next) => {
 
 exports.getMovieDetail = catchAsync(async (req, res, next) => {
   const movieId = req.params.id;
-  const tmdbDetail = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.TMDB_API_KEY}&language=en-US`;
-  const tmdbKeyword = `https://api.themoviedb.org/3/movie/${movieId}/keywords?api_key=${process.env.TMDB_API_KEY}`;
-  const detail = await axios(tmdbDetail);
-  const keyword = await axios(tmdbKeyword);
+  const tmdbUrlDetail = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.TMDB_API_KEY}&language=en-US`;
+  const tmdbUrlKeyword = `https://api.themoviedb.org/3/movie/${movieId}/keywords?api_key=${process.env.TMDB_API_KEY}`;
+  const detail = await axios(tmdbUrlDetail);
+  const keyword = await axios(tmdbUrlKeyword);
 
   detail.data.keywords = keyword.data.keywords;
 
@@ -56,5 +56,18 @@ exports.getProviders = catchAsync(async function(req, res, next) {
   res.status(200).json({
     status: "success",
     data: filteredMovie
+  });
+});
+
+exports.getRecommendation = catchAsync(async (req, res, next) => {
+  const { genreIds, keywordIds } = req.params;
+
+  const tmdbUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genreIds}&with_keywords=${keywordIds}`;
+
+  const movies = await axios(tmdbUrl);
+
+  res.status(200).json({
+    status: "success",
+    data: movies.data
   });
 });
