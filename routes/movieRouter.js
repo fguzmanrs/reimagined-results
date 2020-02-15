@@ -1,7 +1,4 @@
 const express = require("express");
-const path = require("path");
-const axios = require("axios");
-const catchAsync = require("../utill/catchAsync");
 const movieController = require("../controllers/movieController");
 
 const router = express.Router();
@@ -15,7 +12,7 @@ router.get("/recent", movieController.getRecentMovies);
 
 // 2. to get movie details(general info, genre, keywords)
 // used api: TMDB - search > search movies by title | movies > get details and keywords by TMDB id
-router.get("/:id", movieController.getMovieDetail);
+router.get("/:tbmdId", movieController.getMovieDetail);
 
 // 3. to get available providers and link to provider's movie page(NetFlix, Amazon Prime...etc)
 // used api: Utelly > search by title and return available providers & url
