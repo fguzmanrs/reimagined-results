@@ -3,7 +3,13 @@ const axios = require("axios");
 const catchAsync = require("../utill/catchAsync");
 
 exports.getRecentMovies = catchAsync(async (req, res, next) => {
-  const tmdbUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`;
+  const currentDate = new Date();
+  const lastYear = currentDate.getFullYear() - 1;
+  const month = `0${currentDate.getMonth() + 1}`.slice(-2);
+  const date = `0${currentDate.getDate()}`.slice(-2);
+  const oneYearBefore = `${lastYear}-${month}-${date}`;
+
+  const tmdbUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte=${oneYearBefore}`;
 
   const movies = await axios(tmdbUrl);
 
