@@ -17,7 +17,7 @@ router.get("/recent", movieController.getRecentMovies);
 // used api: TMDB - search > search movies by title | movies > get details and keywords by TMDB id
 router.get("/:id", movieController.getMovieDetail);
 
-// 3. to get available providers and link to provider's movie page
+// 3. to get available providers and link to provider's movie page(NetFlix, Amazon Prime...etc)
 // used api: Utelly > search by title and return available providers & url
 router.get("/providers/:movieTitle", movieController.getProviders);
 

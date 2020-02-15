@@ -24,6 +24,7 @@ exports.getMovieDetail = catchAsync(async (req, res, next) => {
   const movieId = req.params.id;
   const tmdbUrlDetail = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.TMDB_API_KEY}&language=en-US`;
   const tmdbUrlKeyword = `https://api.themoviedb.org/3/movie/${movieId}/keywords?api_key=${process.env.TMDB_API_KEY}`;
+
   const detail = await axios(tmdbUrlDetail);
   const keyword = await axios(tmdbUrlKeyword);
 
