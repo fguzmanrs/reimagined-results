@@ -1,9 +1,13 @@
 const express = require("express");
 const movieController = require("../controllers/movieController");
+const authController = require("../controllers/authController");
 
 const router = express.Router();
 
 const utellyApiKey = process.env.utellyApiKey;
+
+// Protect below routers : only login user can access below routers
+router.use(authController.protect);
 
 //! APIs
 // 1. to get the latest popular movies(1 year) for landing page movies
@@ -20,6 +24,9 @@ router.get("/providers/:movieTitle", movieController.getProviders);
 
 // 4. to recommend movies
 // used api: TMDB - discover > movie discover with user's the most hitted genre, keyword
-router.get("/recommend/:genreIds/:keywordIds", movieController.getRecommendation);
+router.get(
+  "/recommend/:genreIds/:keywordIds",
+  movieController.getRecommendation
+);
 
 module.exports = router;
