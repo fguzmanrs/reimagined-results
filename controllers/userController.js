@@ -25,14 +25,56 @@ exports.getMyWatchList = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.postUserPreference = catchAsync(async (req, res, next) => {
-  const { genreId, keywordId } = req.params;
-
-  console.log(genreId, keywordId);
-
+exports.postToMyWatchList = catchAsync(async (req, res, next) => {
+  const { userId, movieId } = req.params;
   //![Sequelize] Need a data insert to review table(genreId, keywordId)
-
-  res.status(200).json({
-    status: "success"
+  db.watchlist.create({
+    userId: usedId,
+    movieId: movieId
+  }).then(function (result) {
+    // We have access to the new todo as an argument inside of the callback function
+    res.status(200).json(result);
   });
 });
+
+exports.removeFromMyWatchList = catchAsync(async (req, res, next) => {
+  const { userId, movieId } = req.params;
+  //![Sequelize] Need a data insert to review table(genreId, keywordId)
+  db.watchlist.destroy(
+    {
+      where: {
+        userId: usedId,
+        movieId: movieId
+      }
+    }).then(function (result) {
+      // We have access to the new todo as an argument inside of the callback function
+      res.status(200).json(result);
+    });
+});
+
+exports.clearMyWatchList = catchAsync(async (req, res, next) => {
+  const { userId } = req.params;
+  //![Sequelize] Need a data insert to review table(genreId, keywordId)
+  db.watchlist.destroy({
+    where: {
+      userId: usedId
+    }
+  }).then(function (result) {
+    // We have access to the new todo as an argument inside of the callback function
+    res.status(200).json(result);
+  });
+});
+
+// Moved to reviewControllers
+// exports.postReview = catchAsync(async (req, res, next) => {
+//   const { userId, movieId, grade } = req.params;
+//   //![Sequelize] Need a data insert to review table(genreId, keywordId)
+//   db.review.create({
+//     userId: usedId,
+//     movieId: movieId,
+//     grade: grade
+//   }).then(function(result) {
+//     // We have access to the new todo as an argument inside of the callback function
+//     res.status(200).json(result);
+//   });
+// });

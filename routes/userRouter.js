@@ -17,7 +17,12 @@ router.post("/logout", authController.logout);
 // Get user info
 router.get("/:userId", userController.getUserInfo);
 
+router.post("/review/:userId/:movieId/:grade", reviewController.postReview);
+
 // When user add a movie to watchlist, post user's preference for movies(genre, keywords)
-router.post("/preference/:genreId/:keywordId", userController.postUserPreference);
+router.get("/watchlist/:userId", userController.getMyWatchList);
+router.post("/watchlist/:userId/:movieId", userController.postToMyWatchlist);
+router.put("/watchlist/:userId/:movieId", userController.removeFromMyWatchlist);
+router.delete("/watchlist/:userId/", userController.clearMyWatchlist);
 
 module.exports = router;
