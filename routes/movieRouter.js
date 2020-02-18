@@ -20,9 +20,6 @@ router.get("/providers/:movieTitle", movieController.getProviders);
 
 // 4. to recommend movies
 // used api: TMDB - discover > movie discover with user's the most hitted genre, keyword
-router.get(
-  "/recommend/:genreIds/:keywordIds",
-  movieController.getRecommendation
-);
+router.get("/recommend/:genreIds/:keywordIds", movieController.getRecommendation);
 
 module.exports = router;
