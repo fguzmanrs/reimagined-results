@@ -1,7 +1,7 @@
 {
   "development": {
-    "username": "test2",
-    "password": "test1234",
+    "username": "root",
+    "password": "Ortiz27!",
     "database": "reimagined_db",
     "host": "127.0.0.1",
     "port": 3306,

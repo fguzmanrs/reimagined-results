@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 var db = require("../models");
 const catchAsync = require("../utill/catchAsync");
 const { promisify } = require("util");
+var db = require("../models");
 
 //* JWT CREATOR : Create JSON Web Token with userId for stateless server
 const createToken = userId => {

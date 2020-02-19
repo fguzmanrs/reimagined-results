@@ -9,7 +9,7 @@ module.exports = function (sequelize, Sequelize) {
         releaseDate: { type: Sequelize.DATE },
         keywordId: { type: Sequelize.STRING },
         tmdbRate: { type: Sequelize.NUMERIC },
-        tmdbId: { type: Sequelize.INTEGER }
+        tmdbId: {type: Sequelize.INTEGER, unique: true}
     }, {
         freezeTableName: true
     });
