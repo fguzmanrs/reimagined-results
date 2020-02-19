@@ -67,9 +67,9 @@ exports.getProviders = catchAsync(async function (req, res, next) {
 });
 
 exports.getRecommendation = catchAsync(async (req, res, next) => {
-  const { genreIds, keywordIds } = req.params;
+  const { genreId, keywordId } = req.params;
 
-  const tmdbUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genreIds}&with_keywords=${keywordIds}`;
+  const tmdbUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genreId}&with_keywords=${keywordId}`;
 
   const movies = await axios(tmdbUrl);
 
