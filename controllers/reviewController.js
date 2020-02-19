@@ -2,13 +2,14 @@ const axios = require("axios");
 const catchAsync = require("../utill/catchAsync");
 
 exports.postReview = catchAsync(async (req, res, next) => {
-  const { genreId, keywordId } = req.params;
+  const { userId, movieId } = req.params;
 
-  console.log(genreId, keywordId);
+  console.log(userId, movieId);
 
-  //![Sequelize] Need a data insert to review table(genreId, keywordId)
+  //![Sequelize] Need a data insert to review table(userId, movieId)
 
   res.status(200).json({
-    status: "success"
+    status: "success",
+    message: "The review is successfully posted!"
   });
 });
