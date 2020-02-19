@@ -30,9 +30,19 @@ exports.signup = catchAsync(async (req, res, next) => {
   console.log("encryptedPwd", encryptedPwd);
 
   //! [Sequelize] Store new user info to DB (username, encryptedPwd)
-  //! [Sequelize] get new user's id to create a token: get it from the returned result of adding user info to DB(userId)
-  // below userId is for test
-  const userId = 123;
+  db.User.create({
+    username: username,
+    password: encryptedPwd,
+    firstName: firstName,
+    lastName: lastName
+  }).then(function(result) {
+    if (result.affectedRows == 0) {
+      return res.status(404).end();
+    } else {
+      res.status(200).json(result);
+      userId = result.userId;
+    }
+  });
 
   // Create a token
   const token = createToken(userId);
@@ -66,14 +76,25 @@ exports.login = catchAsync(async (req, res, next) => {
 
   // Validation 2. Check if there is a user matching to the input username
   //! [Sequelize] bring a user matching the username(user)
+  const encryptedPwd = await bcrypt.hash(password, 12);
+  //![Sequelize] Need to get user info from user table
+  db.User.findOne({ where: { username: username, password: encryptedPwd } }).then(function(result) {
+    if (result.affectedRows == 0) {
+      console.info("user.login: username/password combination not found");
+      return res.status(404).end();
+    } else {
+      res.status(200).json(result);
+      console.info("user.login: logged in as " + result.username);
+    }
+  });
   // below user is for test(password: encrypted pwd of "test1234")
-  const user = {
+  /*  const user = {
     id: 123,
     firstName: "Emily",
     lastName: "Yu",
     username: "bluerain",
     password: "$2a$12$cojKnsNr/Woe9k0V5IEvPuDPkvNPiUavZVT4fUKUSRjIgwr999igS"
-  };
+  }; */
 
   console.log("encrypted pwd: ", password, "input pwd: ", user.password);
 

@@ -1,5 +1,8 @@
 const axios = require("axios");
 const catchAsync = require("../utill/catchAsync");
+var db = require("../models");
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 
 exports.getRecentMovies = catchAsync(async (req, res, next) => {
   const currentDate = new Date();
@@ -35,7 +38,7 @@ exports.getMovieDetail = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getProviders = catchAsync(async function(req, res, next) {
+exports.getProviders = catchAsync(async function (req, res, next) {
   const movieToSearch = req.params.movieTitle;
 
   const movies = await axios({
@@ -73,5 +76,65 @@ exports.getRecommendation = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     data: movies.data
+  });
+});
+
+exports.postToMovieDatabase = catchAsync(async (req, res, next) => {
+  const { title, overview, genreId, popularity, posterPath, releaseDate, keywordId, tmdbRate, tmdbId } = req.params;
+  //![Sequelize] Need a data insert to review table(genreId, keywordId)
+  db.movie.create({
+    title: title,
+    overview: overview,
+    genreId: genreId,
+    popularity: popularity,
+    posterPath: posterPath,
+    releaseDate: releaseDate,
+    keywordId: keywordId,
+    tmdbRate: tmdbRate,
+    tmdbId: tmdbId
+  }).then(function (result) {
+    res.status(200).json(result);
+  });
+});
+
+exports.getMovieByKeyword = catchAsync(async (req, res, next) => {
+  const { keywordId } = req.params;
+  db.movie.findAll({
+    where: {
+      keywordId: { [Op.like]: '%' + keywordId + '%' }
+    }
+  }).then(function (result) {
+    if (result.affectedRows == 0) {
+      return res.status(404).end();
+    } else {
+      res.status(200).json(result);
+    }
+  });
+});
+
+exports.getMovieByGenre = catchAsync(async (req, res, next) => {
+  const { genreId } = req.params;
+  db.movie.findAll({
+    where: {
+      keywordId: { [Op.like]: '%' + keywordId + '%' }
+    }
+  }).then(function (result) {
+    if (result.affectedRows == 0) {
+      return res.status(404).end();
+    } else {
+      res.status(200).json(result);
+    }
+  });
+});
+
+exports.getMovieById = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+  //![Sequelize] Need to get user info from user table
+  db.watchlist.findOne({ where: { id: id } }).then(function (result) {
+    if (result.affectedRows == 0) {
+      return res.status(404).end();
+    } else {
+      res.status(200).json(result);
+    }
   });
 });
