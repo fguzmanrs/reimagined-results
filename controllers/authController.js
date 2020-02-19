@@ -1,9 +1,11 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const catchAsync = require("../utill/catchAsync");
 const { promisify } = require("util");
 
-//* JWT CREATOR : Create JSON Web Token with userId for stateless server
+const db = require("../models");
+const catchAsync = require("../utill/catchAsync");
+
+//! JWT CREATOR : Create JSON Web Token with a user id for authentication with stateless server
 const createToken = userId => {
   const token = jwt.sign(
     {
@@ -16,31 +18,20 @@ const createToken = userId => {
   return token;
 };
 
-//* SIGN UP
+//! SIGN UP
 exports.signup = catchAsync(async (req, res, next) => {
+  // 1. Get user's input
   const { firstName, lastName, username, password } = req.body;
 
-<<<<<<< Updated upstream
-  // Validation for no input( username || pwd )
-  if (!username || !password) {
-    return next(new Error("Please provide email and password."));
-=======
   // 2. Validate for no input
   if (!username || !password || !firstName || !lastName) {
     return next(new Error("Please provide email and password.", 400));
->>>>>>> Stashed changes
   }
 
-  // Encrypt user's password
+  // 3. Encrypt the password
   const encryptedPwd = await bcrypt.hash(password, 12);
   console.log("encryptedPwd", encryptedPwd);
 
-<<<<<<< Updated upstream
-  //! [Sequelize] Store new user info to DB (username, encryptedPwd)
-  //! [Sequelize] get new user's id to create a token: get it from the returned result of adding user info to DB(userId)
-  // below userId is for test
-  const userId = 123;
-=======
   // 4. Store a new user into DB
   let user;
 
@@ -59,13 +50,12 @@ exports.signup = catchAsync(async (req, res, next) => {
         console.log(user);
       }
     });
->>>>>>> Stashed changes
 
-  // Create a token
-  const token = createToken(userId);
+  // 5. Create a JWT token
+  const token = createToken(user);
   console.log("Token: ", token);
 
-  // Send a respond with cookie: Prevents from accessing/modifying the cookie from anywhere except http browser. Expires after 1 hour.
+  // 6. Send a respond with cookie: Prevents from accessing/modifying the cookie from anywhere except http browser. Expires after 1 hour.
   res
     .cookie("jwt", token, {
       maxAge: 3600000,
@@ -93,39 +83,51 @@ exports.login = catchAsync(async (req, res, next) => {
 
   // Validation 2. Check if there is a user matching to the input username
   //! [Sequelize] bring a user matching the username(user)
-  // below user is for test(password: encrypted pwd of "test1234")
-  const user = {
-    id: 123,
-    firstName: "Emily",
-    lastName: "Yu",
-    username: "bluerain",
-    password: "$2a$12$cojKnsNr/Woe9k0V5IEvPuDPkvNPiUavZVT4fUKUSRjIgwr999igS"
-  };
+  // const encryptedPwd = await bcrypt.hash(password, 12);
+  //![Sequelize] Need to get user info from user table
+  // console.log("db.User: ", db);
 
-  console.log("encrypted pwd: ", password, "input pwd: ", user.password);
+  let user;
 
-  // Validation 3. Check if user's input password is same as the password from DB(return Boolean)
-  const isCorrectedPwd = await bcrypt.compare(password, user.password);
+  db.user.findOne({ where: { username } }).then(async function(result) {
+    // console.log("result: ", result);
+    if (result === null) {
+      console.info("user.login: username/password combination not found");
+      return res.status(404).end();
+    } else {
+      user = result.dataValues;
 
-  // If there is NO user found in DB or the password is wrong, generate error.
-  if (!user || !isCorrectedPwd) {
-    return next(new Error("There is no such a user or you typed the password wrong!", 401));
-  }
+      console.log("encrypted pwd: ", user.password, "input pwd: ", password);
 
-  // Create a token
-  const token = createToken(user.id);
+      // Validation 3. Check if user's input password is same as the password from DB(return Boolean)
+      const isCorrectedPwd = await bcrypt.compare(password, user.password);
+      console.log("isCorrectedPwd: ", isCorrectedPwd);
+      // If there is NO user found in DB or the password is wrong, generate error.
+      if (!user || !isCorrectedPwd) {
+        return next(
+          new Error(
+            "There is no such a user or you typed the password wrong!",
+            401
+          )
+        );
+      }
 
-  res
-    .cookie("jwt", token, {
-      maxAge: 3600000,
-      httpOnly: true
-    })
-    .status(200)
-    .json({
-      status: "success",
-      message: "You are logged in successfully!",
-      token
-    });
+      // Create a token
+      const token = createToken(user.id);
+
+      res
+        .cookie("jwt", token, {
+          maxAge: 3600000,
+          httpOnly: true
+        })
+        .status(200)
+        .json({
+          status: "success",
+          message: "You are logged in successfully!",
+          token
+        });
+    }
+  });
 });
 
 //* LOG OUT : Clear cookie having a token
@@ -167,7 +169,12 @@ exports.protect = catchAsync(async (req, res, next) => {
   };
 
   if (!user) {
-    return next(new Error("The user belonging to this token doesn't exist any longer.", 401));
+    return next(
+      new Error(
+        "The user belonging to this token doesn't exist any longer.",
+        401
+      )
+    );
   }
 
   // Save user info to request in order to use it in next controllers.
