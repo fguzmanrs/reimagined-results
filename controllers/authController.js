@@ -3,8 +3,7 @@ const jwt = require("jsonwebtoken");
 const catchAsync = require("../utill/catchAsync");
 const { promisify } = require("util");
 
-//! Create JSON Web Token with userId
-// use JWT token for stateless server
+//* JWT CREATOR : Create JSON Web Token with userId for stateless server
 const createToken = userId => {
   const token = jwt.sign(
     {
@@ -17,10 +16,11 @@ const createToken = userId => {
   return token;
 };
 
+//* SIGN UP
 exports.signup = catchAsync(async (req, res, next) => {
   const { firstName, lastName, username, password } = req.body;
 
-  // Validation
+  // Validation for no input( username || pwd )
   if (!username || !password) {
     return next(new Error("Please provide email and password."));
   }
@@ -34,10 +34,11 @@ exports.signup = catchAsync(async (req, res, next) => {
   // below userId is for test
   const userId = 123;
 
+  // Create a token
   const token = createToken(userId);
   console.log("Token: ", token);
 
-  // Cookie: expires after 1 hour. prevents from accessing/modifying the cookie from anywhere except http browser
+  // Send a respond with cookie: Prevents from accessing/modifying the cookie from anywhere except http browser. Expires after 1 hour.
   res
     .cookie("jwt", token, {
       maxAge: 3600000,
@@ -54,15 +55,16 @@ exports.signup = catchAsync(async (req, res, next) => {
     });
 });
 
+// *LOG IN
 exports.login = catchAsync(async (req, res, next) => {
   const { username, password } = req.body;
 
-  // Validation 1.Check username and password exists
+  // Validation 1.Check if username and password exist
   if (!username || !password) {
     return next(new Error("Please provide email and password.", 400));
   }
 
-  // Validation 2. Check there is a user matching to input username
+  // Validation 2. Check if there is a user matching to the input username
   //! [Sequelize] bring a user matching the username(user)
   // below user is for test(password: encrypted pwd of "test1234")
   const user = {
@@ -78,11 +80,9 @@ exports.login = catchAsync(async (req, res, next) => {
   // Validation 3. Check if user's input password is same as the password from DB(return Boolean)
   const isCorrectedPwd = await bcrypt.compare(password, user.password);
 
-  // If there is NO user found in DB or the password is wrong
+  // If there is NO user found in DB or the password is wrong, generate error.
   if (!user || !isCorrectedPwd) {
-    return next(
-      new Error("There is no such a user or you typed the password wrong!", 401)
-    );
+    return next(new Error("There is no such a user or you typed the password wrong!", 401));
   }
 
   // Create a token
@@ -101,6 +101,7 @@ exports.login = catchAsync(async (req, res, next) => {
     });
 });
 
+//* LOG OUT : Clear cookie having a token
 exports.logout = catchAsync(async (req, res, next) => {
   res
     .clearCookie("jwt")
@@ -111,10 +112,11 @@ exports.logout = catchAsync(async (req, res, next) => {
     });
 });
 
+//* PROTECT : Protects other middlewares coming after this middleware( Not allow to access to next middlewares if a request fails to be verified here for its authentication )
 exports.protect = catchAsync(async (req, res, next) => {
   console.log("This is protect middleware");
 
-  // Check if there is a token and get it
+  // Check if the request has a token and save it in variable.
   console.log("authorization", req.cookies.jwt);
   const token = req.cookies.jwt;
 
@@ -122,11 +124,11 @@ exports.protect = catchAsync(async (req, res, next) => {
     return next(new Error("You are not logged in! Please log in first.", 401));
   }
 
-  // Verify the token
+  // Verify the token and get the request's userId
   const decodedJwt = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
   console.log(decodedJwt); // format: { userId: 123, iat: 1582066423, exp: 1582070023 }
 
-  // Check if there is a user
+  // Check if there is a user matching to that userId from DB
   //! [Sequelize] Find the user matching to decodedJwt's userId
   // below user is for test(password: encrypted pwd of "test1234")
   const user = {
@@ -138,12 +140,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   };
 
   if (!user) {
-    return next(
-      new Error(
-        "The user belonging to this token doesn't exist any longer.",
-        401
-      )
-    );
+    return next(new Error("The user belonging to this token doesn't exist any longer.", 401));
   }
 
   // Save user info to request in order to use it in next controllers.
