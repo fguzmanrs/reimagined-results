@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const movieRouter = require("./routes/movieRouter");
 const userRouter = require("./routes/userRouter");
 const reviewRouter = require("./routes/reviewRouter");
+const globalErrorHandler = require("./controllers/errorController");
 
 const app = express();
 
@@ -23,13 +24,15 @@ app.use("/api/movies", movieRouter);
 app.use("/api/users", userRouter);
 app.use("/api/reviews", reviewRouter);
 
-// Global error handler - need to be revised
-app.use((err, req, res, next) => {
-  console.log(err, "this is global err");
-  res.status(403).json({
+// Error handling for invalid path access
+app.all("*", (req, res, next) => {
+  res.status(404).json({
     status: "fail",
-    message: "catched err from global err handler"
+    message: `Cannot find ${req.originalUrl} on the server. Please check the path.`
   });
 });
+
+// Global error handling middeware
+app.use(globalErrorHandler);
 
 module.exports = app;

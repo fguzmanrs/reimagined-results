@@ -20,19 +20,46 @@ const createToken = userId => {
 exports.signup = catchAsync(async (req, res, next) => {
   const { firstName, lastName, username, password } = req.body;
 
+<<<<<<< Updated upstream
   // Validation for no input( username || pwd )
   if (!username || !password) {
     return next(new Error("Please provide email and password."));
+=======
+  // 2. Validate for no input
+  if (!username || !password || !firstName || !lastName) {
+    return next(new Error("Please provide email and password.", 400));
+>>>>>>> Stashed changes
   }
 
   // Encrypt user's password
   const encryptedPwd = await bcrypt.hash(password, 12);
   console.log("encryptedPwd", encryptedPwd);
 
+<<<<<<< Updated upstream
   //! [Sequelize] Store new user info to DB (username, encryptedPwd)
   //! [Sequelize] get new user's id to create a token: get it from the returned result of adding user info to DB(userId)
   // below userId is for test
   const userId = 123;
+=======
+  // 4. Store a new user into DB
+  let user;
+
+  db.user
+    .create({
+      username,
+      password: encryptedPwd,
+      firstName,
+      lastName
+    })
+    .then(function(result) {
+      if (result.affectedRows == 0) {
+        return res.status(404).end();
+      } else {
+        user = result.dataValues.id;
+        console.log(user);
+      }
+    });
+>>>>>>> Stashed changes
 
   // Create a token
   const token = createToken(userId);
