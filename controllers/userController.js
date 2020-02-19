@@ -25,19 +25,20 @@ exports.getMyWatchList = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.postToMyWatchList = catchAsync(async (req, res, next) => {
+exports.postToMyWatchlist =  catchAsync(async (req, res, next) => {
+  console.info('userController.postToMyWatchList...');
   const { userId, movieId } = req.params;
   //![Sequelize] Need a data insert to review table(genreId, keywordId)
   db.watchlist.create({
-    userId: usedId,
+    userId: userId,
     movieId: movieId
-  }).then(function (result) {
-    // We have access to the new todo as an argument inside of the callback function
+  }).then(function(result) {
     res.status(200).json(result);
+    return catchAsync(req,res,next);    
   });
 });
 
-exports.removeFromMyWatchList = catchAsync(async (req, res, next) => {
+exports.removeFromMyWatchlist = catchAsync(async (req, res, next) => {
   const { userId, movieId } = req.params;
   //![Sequelize] Need a data insert to review table(genreId, keywordId)
   db.watchlist.destroy(
@@ -52,7 +53,7 @@ exports.removeFromMyWatchList = catchAsync(async (req, res, next) => {
     });
 });
 
-exports.clearMyWatchList = catchAsync(async (req, res, next) => {
+exports.clearMyWatchlist = catchAsync(async (req, res, next) => {
   const { userId } = req.params;
   //![Sequelize] Need a data insert to review table(genreId, keywordId)
   db.watchlist.destroy({

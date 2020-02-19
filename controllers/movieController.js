@@ -1,6 +1,7 @@
 const axios = require("axios");
 const catchAsync = require("../utill/catchAsync");
 var db = require("../models");
+const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 
 exports.getRecentMovies = catchAsync(async (req, res, next) => {

@@ -15,7 +15,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   const encryptedPwd = await bcrypt.hash(password, 12);
 
   //! [Sequelize] Store new user info to DB (username, encryptedPwd)
-  db.user.create({
+  db.User.create({
     username: username,
     password: encryptedPwd,
     firstName: firstName,
@@ -55,7 +55,7 @@ exports.login = catchAsync(async (req, res, next) => {
 
   const encryptedPwd = await bcrypt.hash(password, 12);
   //![Sequelize] Need to get user info from user table
-  db.user.findOne({ where: { username: username, password: encryptedPwd } }).then(function (result) {
+  db.User.findOne({ where: { username: username, password: encryptedPwd } }).then(function (result) {
     if (result.affectedRows == 0) {
       console.info('user.login: username/password combination not found');
       return res.status(404).end();
