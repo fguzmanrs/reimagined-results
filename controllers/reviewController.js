@@ -2,9 +2,9 @@ const axios = require("axios");
 const catchAsync = require("../utill/catchAsync");
 
 exports.postReview = catchAsync(async (req, res, next) => {
-  const { userId, movieId } = req.params;
+  const { userId, movieId, grade } = req.params;
 
-  console.log(userId, movieId);
+  console.log(userId, movieId, grade);
 
   //![Sequelize] Need a data insert to review table(userId, movieId)
 
