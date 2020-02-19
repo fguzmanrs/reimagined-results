@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+var db = require("../models");
 const catchAsync = require("../utill/catchAsync");
 const { promisify } = require("util");
 
@@ -30,22 +31,28 @@ exports.signup = catchAsync(async (req, res, next) => {
   console.log("encryptedPwd", encryptedPwd);
 
   //! [Sequelize] Store new user info to DB (username, encryptedPwd)
-  db.User.create({
-    username: username,
-    password: encryptedPwd,
-    firstName: firstName,
-    lastName: lastName
-  }).then(function(result) {
-    if (result.affectedRows == 0) {
-      return res.status(404).end();
-    } else {
-      res.status(200).json(result);
-      userId = result.userId;
-    }
-  });
+  let user;
+
+  db.user
+    .create({
+      username: username,
+      password: encryptedPwd,
+      firstName: firstName,
+      lastName: lastName
+    })
+    .then(function(result) {
+      if (result.affectedRows == 0) {
+        return res.status(404).end();
+      } else {
+        user = result.dataValues.id;
+        console.log(user);
+        res.status(200).json(result);
+        // userId = result.userId;
+      }
+    });
 
   // Create a token
-  const token = createToken(userId);
+  const token = createToken(user);
   console.log("Token: ", token);
 
   // Send a respond with cookie: Prevents from accessing/modifying the cookie from anywhere except http browser. Expires after 1 hour.
@@ -76,50 +83,46 @@ exports.login = catchAsync(async (req, res, next) => {
 
   // Validation 2. Check if there is a user matching to the input username
   //! [Sequelize] bring a user matching the username(user)
-  const encryptedPwd = await bcrypt.hash(password, 12);
+  // const encryptedPwd = await bcrypt.hash(password, 12);
   //![Sequelize] Need to get user info from user table
-  db.User.findOne({ where: { username: username, password: encryptedPwd } }).then(function(result) {
-    if (result.affectedRows == 0) {
+  // console.log("db.User: ", db);
+
+  let user;
+
+  db.user.findOne({ where: { username } }).then(async function(result) {
+    // console.log("result: ", result);
+    if (result === null) {
       console.info("user.login: username/password combination not found");
       return res.status(404).end();
     } else {
-      res.status(200).json(result);
-      console.info("user.login: logged in as " + result.username);
+      user = result.dataValues;
+
+      console.log("encrypted pwd: ", user.password, "input pwd: ", password);
+
+      // Validation 3. Check if user's input password is same as the password from DB(return Boolean)
+      const isCorrectedPwd = await bcrypt.compare(password, user.password);
+      console.log("isCorrectedPwd: ", isCorrectedPwd);
+      // If there is NO user found in DB or the password is wrong, generate error.
+      if (!user || !isCorrectedPwd) {
+        return next(new Error("There is no such a user or you typed the password wrong!", 401));
+      }
+
+      // Create a token
+      const token = createToken(user.id);
+
+      res
+        .cookie("jwt", token, {
+          maxAge: 3600000,
+          httpOnly: true
+        })
+        .status(200)
+        .json({
+          status: "success",
+          message: "You are logged in successfully!",
+          token
+        });
     }
   });
-  // below user is for test(password: encrypted pwd of "test1234")
-  /*  const user = {
-    id: 123,
-    firstName: "Emily",
-    lastName: "Yu",
-    username: "bluerain",
-    password: "$2a$12$cojKnsNr/Woe9k0V5IEvPuDPkvNPiUavZVT4fUKUSRjIgwr999igS"
-  }; */
-
-  console.log("encrypted pwd: ", password, "input pwd: ", user.password);
-
-  // Validation 3. Check if user's input password is same as the password from DB(return Boolean)
-  const isCorrectedPwd = await bcrypt.compare(password, user.password);
-
-  // If there is NO user found in DB or the password is wrong, generate error.
-  if (!user || !isCorrectedPwd) {
-    return next(new Error("There is no such a user or you typed the password wrong!", 401));
-  }
-
-  // Create a token
-  const token = createToken(user.id);
-
-  res
-    .cookie("jwt", token, {
-      maxAge: 3600000,
-      httpOnly: true
-    })
-    .status(200)
-    .json({
-      status: "success",
-      message: "You are logged in successfully!",
-      token
-    });
 });
 
 //* LOG OUT : Clear cookie having a token
