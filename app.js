@@ -23,7 +23,7 @@ app.use("/api/movies", movieRouter);
 app.use("/api/users", userRouter);
 app.use("/api/reviews", reviewRouter);
 
-// Global error handler
+// Global error handler - need to be revised
 app.use((err, req, res, next) => {
   console.log(err, "this is global err");
   res.status(403).json({
