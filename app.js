@@ -5,6 +5,8 @@ const cookieParser = require("cookie-parser");
 const movieRouter = require("./routes/movieRouter");
 const userRouter = require("./routes/userRouter");
 const reviewRouter = require("./routes/reviewRouter");
+const discoveredRouter = require("./routes/discoveredRouter");
+
 const { globalErrorHandler } = require("./controllers/errorController");
 const ErrorFactory = require("./utill/errorFactory");
 
@@ -24,6 +26,7 @@ app.use(cookieParser());
 app.use("/api/movies", movieRouter);
 app.use("/api/users", userRouter);
 app.use("/api/reviews", reviewRouter);
+app.use("/api/discovered", discoveredRouter);
 
 // Error handling for invalid path access
 app.all("*", (req, res, next) => {
