@@ -6,6 +6,7 @@ const movieRouter = require("./routes/movieRouter");
 const userRouter = require("./routes/userRouter");
 const reviewRouter = require("./routes/reviewRouter");
 const { globalErrorHandler } = require("./controllers/errorController");
+const ErrorFactory = require("./utill/errorFactory");
 
 const app = express();
 
@@ -26,10 +27,12 @@ app.use("/api/reviews", reviewRouter);
 
 // Error handling for invalid path access
 app.all("*", (req, res, next) => {
-  res.status(404).json({
-    status: "fail",
-    message: `Cannot find ${req.originalUrl} on the server. Please check the path.`
-  });
+  next(
+    new ErrorFactory(
+      404,
+      `Cannot find ${req.originalUrl} on the server. Please check the path.`
+    )
+  );
 });
 
 // Global error handling middeware
