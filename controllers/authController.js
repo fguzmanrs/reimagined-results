@@ -25,7 +25,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 
   // 2. Validate for no input
   if (!username || !password || !firstName || !lastName) {
-    return next(new Error("Please provide email and password.", 400));
+    return next(new Error(400, "Please provide email and password."));
   }
 
   // 3. Encrypt the password

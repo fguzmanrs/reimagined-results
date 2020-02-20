@@ -5,7 +5,7 @@ const cookieParser = require("cookie-parser");
 const movieRouter = require("./routes/movieRouter");
 const userRouter = require("./routes/userRouter");
 const reviewRouter = require("./routes/reviewRouter");
-const globalErrorHandler = require("./controllers/errorController");
+const { globalErrorHandler } = require("./controllers/errorController");
 
 const app = express();
 
