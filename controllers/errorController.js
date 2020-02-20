@@ -22,12 +22,13 @@ exports.globalErrorHandler = (err, req, res, next) => {
   //* CASE 2. : when it's in production mode
   else if (process.env.NODE_ENV === "production") {
     // When DB throw an error becuase of a duplicated input, catch and convert it to the custom error
+    // ie: duplicated tmdbId when creating a movie, already existing username etc...
     if (err.name === "SequelizeUniqueConstraintError") {
       const errItem = err.errors[0];
 
       err = new ErrorFactory(
         400,
-        `The ${errItem.path}, "${errItem.value}" has been already taken by other.`
+        `The ${errItem.path}, "${errItem.value}" already exists in our database. Please try again with unique value.`
       );
     }
 

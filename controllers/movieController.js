@@ -4,6 +4,8 @@ var db = require("../models");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 
+//! Get the recent movies(within 1 year)
+// required parameter: none
 exports.getRecentMovies = catchAsync(async (req, res, next) => {
   const currentDate = new Date();
   const lastYear = currentDate.getFullYear() - 1;
@@ -22,10 +24,12 @@ exports.getRecentMovies = catchAsync(async (req, res, next) => {
   });
 });
 
+//! Get movie info: detail + keyword
+// required parameter: TMDB id
 exports.getMovieDetail = catchAsync(async (req, res, next) => {
-  const tbmdId = req.params.tbmdId;
-  const tmdbUrlDetail = `https://api.themoviedb.org/3/movie/${tbmdId}?api_key=${process.env.TMDB_API_KEY}&language=en-US`;
-  const tmdbUrlKeyword = `https://api.themoviedb.org/3/movie/${tbmdId}/keywords?api_key=${process.env.TMDB_API_KEY}`;
+  const tmdbId = req.params.tmdbId;
+  const tmdbUrlDetail = `https://api.themoviedb.org/3/movie/${tmdbId}?api_key=${process.env.TMDB_API_KEY}&language=en-US`;
+  const tmdbUrlKeyword = `https://api.themoviedb.org/3/movie/${tmdbId}/keywords?api_key=${process.env.TMDB_API_KEY}`;
 
   const detail = await axios(tmdbUrlDetail);
   const keyword = await axios(tmdbUrlKeyword);
@@ -38,6 +42,8 @@ exports.getMovieDetail = catchAsync(async (req, res, next) => {
   });
 });
 
+//! Get on demand service providers for specific movie(Netflix, Amazon prime etc)
+// required parameter: movie title
 exports.getProviders = catchAsync(async function(req, res, next) {
   const movieToSearch = req.params.movieTitle;
 
@@ -68,6 +74,8 @@ exports.getProviders = catchAsync(async function(req, res, next) {
   });
 });
 
+//! Recommend movies based on a genre id, keyword id
+// required parameter: TMDB genre id, keyword id
 exports.getRecommendation = catchAsync(async (req, res, next) => {
   const { genreId, keywordId } = req.params;
 
@@ -81,34 +89,17 @@ exports.getRecommendation = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.postToMovieDatabase = catchAsync(async (req, res, next) => {
-  const {
-    title,
-    overview,
-    genreId,
-    popularity,
-    posterPath,
-    releaseDate,
-    keywordId,
-    tmdbRate,
-    tmdbId
-  } = req.params;
-  //![Sequelize] Need a data insert to review table(genreId, keywordId)
-  db.movie
-    .create({
-      title: title,
-      overview: overview,
-      genreId: genreId,
-      popularity: popularity,
-      posterPath: posterPath,
-      releaseDate: releaseDate,
-      keywordId: keywordId,
-      tmdbRate: tmdbRate,
-      tmdbId: tmdbId
-    })
-    .then(function(result) {
-      res.status(200).json(result);
-    });
+//! Post a movie to DB
+// required info via req.body: title, overview, genreId, popularity, posterPath, releaseDate, keywordId(stringified array), tmdbRate, tmdbId(stringified array)
+exports.createMovie = catchAsync(async (req, res, next) => {
+  console.log("🍉 req.body: ", req.body);
+
+  const createdMovie = await db.movie.create(req.body);
+
+  res.status(201).json({
+    status: "success",
+    data: createdMovie
+  });
 });
 
 exports.getMovieByKeyword = catchAsync(async (req, res, next) => {

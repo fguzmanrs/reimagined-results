@@ -107,7 +107,7 @@ exports.login = catchAsync(async (req, res, next) => {
 exports.logout = catchAsync(async (req, res, next) => {
   // Check if a user is logged out
   if (!req.cookies.jwt) {
-    next(new ErrorFactory(400, "You are already logged out!"));
+    return next(new ErrorFactory(400, "You are already logged out!"));
   }
 
   // Clear cookie and token so the user can logout

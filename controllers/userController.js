@@ -50,7 +50,7 @@ exports.removeFromMyWatchlist = catchAsync(async (req, res, next) => {
   db.watchlist
     .destroy({
       where: {
-        userId: usedId,
+        userId: userId,
         movieId: movieId
       }
     })
@@ -66,7 +66,7 @@ exports.clearMyWatchlist = catchAsync(async (req, res, next) => {
   db.watchlist
     .destroy({
       where: {
-        userId: usedId
+        userId: userId
       }
     })
     .then(function(result) {
