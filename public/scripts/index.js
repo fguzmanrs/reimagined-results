@@ -12,7 +12,3 @@ visibilityToggle.addEventListener("click", function() {
     input.setAttribute("type", "password");
     pwVisible = false }
 });
-
-function logIn() {
-  document.getElementById('form1').submit();
-  }

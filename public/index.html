@@ -1,48 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="public/styles/style.css">
+    <title>Movie Map</title>
     <script src="https://kit.fontawesome.com/a53d2090f6.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Montserrat|Montserrat+Subrayada&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="styles/style.css">
 
 </head>
+
 <body>
+    <nav class="blue" role="navigation">
+        <div class="nav-wrapper container">
+            <a id="logo-container" href="#" class="brand-logo">Movie Map</a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="index.html">Home</a></li>
+                <li><a id="settings-link" href="#"><i class="fas fa-cog"></i></a></li>
+                <li><a href="#">Our Story</a></li>
+                <li><a href="#">Our Team</a></li>
+            </ul>
+                        
+            <ul id="nav-mobile" class="sidenav">
+                <li><a href="#">Navbar Link</a></li>
+            </ul>
+            <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        </div>
+    </nav>
+
+    <div id="index-banner" class="container">
+        <div class="section no-pad-bot">
+            <div class="container">
+                <div>
+                    <input type="text" placeholder="Search" id="srch-input">                
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="parallax-container valign-wrapper">
+        <div class="section no-pad-bot">
+            <div class="container">
+                <div class="row center">
+                    <h5 class="header col s12 light">RECOMMENDATIONS #1
+                    </h5>
+                </div>
+            </div>
+        </div>
+        <div class="parallax"><img src="" alt="Unsplashed background img 2"></div>
+    </div>
+
+    <div class="container">
+        <div class="section">
+        </div>
+    </div>
+
+    <div class="parallax-container valign-wrapper">
+        <div class="section no-pad-bot">
+            <div class="container">
+                <div class="row center">
+                    <h5 class="header col s12 light">RECOMMENDATIONS #2
+                    </h5>
+                </div>
+            </div>
+        </div>
+        <div class="parallax"><img src="" alt="Unsplashed background img 2"></div>
+    </div>
+
+    <div class="container">
+        <div class="section">
+        </div>
+    </div>
+
+    <div class="parallax-container valign-wrapper">
+        <div class="section no-pad-bot">
+            <div class="container">
+                <div class="row center">
+                    <h5 class="header col s12 light">RECOMMENDATIONS #3
+                    </h5>
+                </div>
+            </div>
+        </div>
+        <div class="parallax"><img src="" alt="Unsplashed background img 2"></div>
+    </div>
+
+    <footer class="page-footer blue">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 center">
+                    <h3><i class="mdi-content-send brown-text"></i></h3>
+                    <h4>Our Story</h4>
+                    <p class="left-align light">We are a full-stack development team of students working on this
+                        project like
+                        it's our full time job.Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s6 m3">
+                    <div class="icon-block">
+                        <h5 class="center"><a class="white-text" href="#!">Emily <br>Yu</a></h5>
+                        <h6 class="center">Back-End</h6>
+                        <p class="light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                    </div>
+                </div>
+                <div class="col s6 m3">
+                    <div class="icon-block">
+                        <h5 class="center"><a class="white-text"  href="#!">Fabiola Guzman</a></h5>
+                        <h6 class="center">Back-End</h6>
+                        <p class="light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                    </div>
+                </div>
+                <div class="col s6 m3">
+                    <div class="icon-block">
+                        <h5 class="center"><a class="white-text" href="#!">Francisco Ortiz</a></h5>
+                        <h6 class="center">Back-End</h6>
+                        <p class="light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                    </div>
+                </div>
+                <div class="col s6 m3">
+                    <div class="icon-block">
+                        <h5 class="center"><a  class="white-text" href="#!">Hayden Cross</a></h5>
+                        <h6 class="center">Back-End</h6>
+                        <p class="light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                    </div>
+                </div>
     
-    <header>    
-                <div id="app-name">Screen Binge</div>
-                    <nav>    
-                        <ul>
-                            <li><a href="index.html">Home</a></li>
-                            <li><a id="settings-link" href="#"><i class="fas fa-cog"></i></a></li>
-                            <li><input type="text" placeholder="Search" id = "srch-input"></li>
-                            <li id = "srch-btn"><button><i class="fas fa-search"></i></button></li>
-                            <!-- <li id = "srch-btn"><a id = "src" href="#" target = "_blank"><i class="fas fa-search"></i></a></li> -->
-                        </ul>
-                    </nav>
-    </header>
+            </div>
+        </div>
+        <div class="footer-copyright center">
+            <div class="container"><a class="white-text" href="">Fantastic 404</a>
+            </div>
+        </div>
+    </footer>
 
-    <div class = "movie-row" id = "row-1"> 
-        <h2>Your List</h2>
-    </div>
-
-    <div class = "movie-row" id = "row-2"> 
-        <h2>Recommended Films</h2>
-    </div>
-
-    <div class = "movie-row" id = "row-3"> 
-        <h2>Recommended Films</h2>
-    </div>
-
-    <div class = "movie-row" id = "row-4"> 
-        <h2>Recommended Films</h2>
-    </div>
-
-    <div class = "movie-row" id = "row-5"> 
-        <h2>Recommended Films</h2>
-    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 </body>
+
 </html>
