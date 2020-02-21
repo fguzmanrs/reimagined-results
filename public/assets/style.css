@@ -8,12 +8,32 @@ body {
 }
 
 nav {
-    background-color: #e6e0e0;
+    height: 135px;
+    background: url("../images/Movies2.jpg") no-repeat center center;
+    background-size: cover; 
 }
 
 #logo-container {
-    color: #13111A;
-    font-family: 'Montserrat Subrayada', sans-serif;
+    font-size: 60px;
+}
+
+.brand-logo {
+    font-family: 'montserrat subrayada', 'montserrat';
+}
+
+.nav-options {
+    float: right;
+}
+
+#srch-input { 
+    background-color: #fff;
+    opacity: 0.75;
+    border-radius: 15px;
+    height: 30px;
+} 
+
+.section .no-pad-bot{
+    padding: 0px;
 }
 
 h5 {
@@ -31,4 +51,68 @@ h5 {
 
 .material-icons.md1:hover::before{
   content:"navigate_next"; 
+
+@media only screen and (max-width: 1050px) {
+    nav {
+        height: 115px;
+    }
+    
+    #logo-container{
+        width: 100%;
+        text-align: center;
+        display: block;
+    }
+    .nav-options {
+        position: relative;
+        margin-left: auto;
+        margin-right: auto;
+        width: 315px; 
+        height: 60px;
+        display: block;
+        /* margin-top: 50px; */
+        padding-top: 50px;
+        float: none;
+    }
+}
+
+@media only screen and (max-width: 870px) {
+    #logo-container{
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media only screen and (max-width: 412px) {
+    #logo-container{
+        font-size: 50px;
+    }
+}
+
+@media only screen and (max-width: 345px) {
+    #logo-container{
+        font-size: 45px;
+    }
+}
+
+@media only screen and (max-width: 330px) {
+    .nav-wrapper container {
+        margin-left: none;
+        margin-right: none;
+    }
+    
+    .nav-options {
+        width: 320px;
+    }
+}
+
+@media only screen and (max-width: 308px) {
+    #logo-container{
+        font-size: 40px;
+    }
+}
+
+@media only screen and (max-width: 275px) {
+    #logo-container{
+        font-size: 35px;
+    }
 }
