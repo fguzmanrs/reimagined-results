@@ -1,7 +1,8 @@
 ## Movie Map App
+Our application has been created to help film buffs who want targeted movie reccomendatios and the information and resources to watch their finds. Our app is able to provide up-to-date information withour requiring a user to search through multiple apps, websites, and subscription services.
 
 ## Description: 
-The Movie Map App has been created to "" and is able to "".
+Using various film APIs we were able to create an app that allows for registered users to receive tailored film recommendations, with information for how to watch the recommended films. In addition, registered users can save their searches and create watchlists. Movie Map saves time by being a one stop film search engine.
 
 ## Prerequisites
 **Web browser.** - *We recommend Google Chrome.*
