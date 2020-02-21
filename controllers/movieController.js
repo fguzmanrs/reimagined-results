@@ -51,12 +51,10 @@ exports.getProviders = catchAsync(async function(req, res, next) {
 
   const movies = await axios({
     method: "GET",
-    url:
-      "https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/lookup",
+    url: "https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/lookup",
     headers: {
       "content-type": "application/octet-stream",
-      "x-rapidapi-host":
-        "utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com",
+      "x-rapidapi-host": "utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com",
       "x-rapidapi-key": process.env.UTELLY_API_KEY
     },
     params: {
@@ -116,39 +114,39 @@ exports.createMovie = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getMovieByKeyword = catchAsync(async (req, res, next) => {
-  const { keywordId } = req.params;
-  db.movie
-    .findAll({
-      where: {
-        keywordId: { [Op.like]: "%" + keywordId + "%" }
-      }
-    })
-    .then(function(result) {
-      if (result.affectedRows == 0) {
-        return res.status(404).end();
-      } else {
-        res.status(200).json(result);
-      }
-    });
-});
+// exports.getMovieByKeyword = catchAsync(async (req, res, next) => {
+//   const { keywordId } = req.params;
+//   db.movie
+//     .findAll({
+//       where: {
+//         keywordId: { [Op.like]: "%" + keywordId + "%" }
+//       }
+//     })
+//     .then(function(result) {
+//       if (result.affectedRows == 0) {
+//         return res.status(404).end();
+//       } else {
+//         res.status(200).json(result);
+//       }
+//     });
+// });
 
-exports.getMovieByGenre = catchAsync(async (req, res, next) => {
-  const { genreId } = req.params;
-  db.movie
-    .findAll({
-      where: {
-        keywordId: { [Op.like]: "%" + keywordId + "%" }
-      }
-    })
-    .then(function(result) {
-      if (result.affectedRows == 0) {
-        return res.status(404).end();
-      } else {
-        res.status(200).json(result);
-      }
-    });
-});
+// exports.getMovieByGenre = catchAsync(async (req, res, next) => {
+//   const { genreId } = req.params;
+//   db.movie
+//     .findAll({
+//       where: {
+//         keywordId: { [Op.like]: "%" + keywordId + "%" }
+//       }
+//     })
+//     .then(function(result) {
+//       if (result.affectedRows == 0) {
+//         return res.status(404).end();
+//       } else {
+//         res.status(200).json(result);
+//       }
+//     });
+// });
 
 exports.getMovieById = catchAsync(async (req, res, next) => {
   const { id } = req.params;
