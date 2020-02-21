@@ -1,8 +1,8 @@
 body { 
-    font-family: 'Open Sans', sans-serif;
+    font-family:'Montserrat', sans-serif;
     background: #13111A;
     background: 
-        -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%, rgba(138,114,76,0) 40%), 
+        -webkit-radial-gradient(0% 100%, circle cover, rgba(104,128,138,.4) 10%, rgba(138,114,76,0) 40%), 
         -webkit-linear-gradient(top, rgba(57,173,219,.25) 0%, rgba(42,60,87,.4) 100%), 
         -webkit-linear-gradient(-45deg, #48668c 0%, #0F4C81 10%,#13111A 75%);
 }
@@ -35,6 +35,22 @@ nav {
 .section .no-pad-bot{
     padding: 0px;
 }
+
+h5 {
+    font-family: 'Montserrat Subrayada', sans-serif;
+}
+
+.card-image.img
+{
+  height:150px; !important
+}
+
+.material-icons.md1::before{
+  content:"search"; 
+}
+
+.material-icons.md1:hover::before{
+  content:"navigate_next"; 
 
 @media only screen and (max-width: 1050px) {
     nav {
