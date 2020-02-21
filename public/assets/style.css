@@ -125,10 +125,67 @@ h5 {
     }
 }
 
+@media only screen and (max-width: 950px) {
+
+    .info-card {
+        margin-right: 7.5%;
+        margin-left: 7.5%;
+        width: 85%;
+    }
+}
+
 @media only screen and (max-width: 870px) {
     #logo-container{
         width: 100%;
         text-align: center;
+    }
+
+    h2 {
+        font-size: 3rem;
+    }
+}
+
+@media only screen and (max-width: 750px) {
+
+    h2 {
+        font-size: 2.5rem;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+
+    h2 {
+        font-size: 2.5rem;
+    }
+
+    .card .card-content {
+        padding: 24px 0px !important;
+    }
+}
+
+@media only screen and (max-width: 580px) {
+
+    .info-card {
+        margin-right: 2.5%;
+        margin-left: 2.5%;
+        width: 95%;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+
+    .info-card {
+        margin-right: 2.5%;
+        margin-left: 2.5%;
+        width: 95%;
+        height: 500px;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+
+    h2 {
+        font-size: 2.0rem;
     }
 }
 
@@ -138,9 +195,19 @@ h5 {
     }
 }
 
+@media only screen and (max-width: 370px) {
+
+    .info-card {
+        height: 600px;
+    }
+}
+
 @media only screen and (max-width: 345px) {
     #logo-container{
         font-size: 45px;
+    }
+    .info-card {
+        height: 750px;
     }
 }
 
