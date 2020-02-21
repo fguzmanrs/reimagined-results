@@ -22,7 +22,8 @@ router.get("/providers/:movieTitle", movieController.getProviders);
 
 // 4. Recommend movies
 // used api: TMDB - discover > movie discover with user's the most hitted genre, keyword
-router.get("/recommend/:genreId/:keywordId", movieController.getRecommendation);
+// router.get("/recommend/:genreId/:keywordId", movieController.getRecommendation);
+router.get("/recommend/:genreId", movieController.getRecommendation);
 
 // 5. Create a movie(When user clicks one specific movie, add a movie to 'movie' table)
 router.post("/", movieController.createMovie);
