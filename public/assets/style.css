@@ -14,7 +14,9 @@ nav {
 }
 
 #logo-container {
-    font-size: 60px;
+    color: white;
+    font-size: 100px;
+    margin-top: 40px;
 }
 
 .brand-logo {
@@ -63,7 +65,7 @@ h5 {
     width: 66%;
     border-radius: 20px;
     border: 0.5px solid lightgrey;
-    background-color: #e6e0e0
+    background-color: #e6e0e0;
 }
 
 #header {
@@ -80,6 +82,13 @@ h5 {
     margin-top: 20px;
     border-top: none;
 }
+
+.stream-links {
+    text-decoration: underline;
+    font-weight: bold;
+    color: #62a4c1 !important;
+}
+
 /***************************** Information Card CSS ************************************************/
 
 /***************************** Footer CSS **************************************/
