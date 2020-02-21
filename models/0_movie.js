@@ -4,7 +4,7 @@ module.exports = function (sequelize, Sequelize) {
         title: { type: Sequelize.STRING, allowNull: false },
         overview: { type: Sequelize.TEXT },
         genreId: { type: Sequelize.STRING },
-        popularity: { type: Sequelize.NUMERIC },
+        popularity: { type: Sequelize.NUMERIC(6,3) },
         posterPath: { type: Sequelize.STRING },
         releaseDate: { type: Sequelize.DATE },
         keywordId: { type: Sequelize.STRING },

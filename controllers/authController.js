@@ -1,11 +1,12 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-var db = require("../models");
-const catchAsync = require("../utill/catchAsync");
 const { promisify } = require("util");
-var db = require("../models");
 
-//* JWT CREATOR : Create JSON Web Token with userId for stateless server
+const db = require("../models");
+const catchAsync = require("../utill/catchAsync");
+const ErrorFactory = require("../utill/errorFactory");
+
+//! JWT CREATOR : Create JSON Web Token with a user id for authentication with stateless server
 const createToken = userId => {
   const token = jwt.sign(
     {
@@ -18,45 +19,31 @@ const createToken = userId => {
   return token;
 };
 
-//* SIGN UP
+//! SIGN UP
 exports.signup = catchAsync(async (req, res, next) => {
+  // 1. Get user's input
   const { firstName, lastName, username, password } = req.body;
 
-  // Validation for no input( username || pwd )
-  if (!username || !password) {
-    return next(new Error("Please provide email and password."));
+  // 2. Validate for no input
+  if (!username || !password || !firstName || !lastName) {
+    return next(new ErrorFactory(400, "Please provide all required info."));
   }
 
-  // Encrypt user's password
+  // 3. Encrypt the password
   const encryptedPwd = await bcrypt.hash(password, 12);
-  console.log("encryptedPwd", encryptedPwd);
 
-  //! [Sequelize] Store new user info to DB (username, encryptedPwd)
-  let user;
+  // 4. Store a new user into DB
+  const result = await db.user.create({
+    username,
+    password: encryptedPwd,
+    firstName,
+    lastName
+  });
 
-  db.user
-    .create({
-      username: username,
-      password: encryptedPwd,
-      firstName: firstName,
-      lastName: lastName
-    })
-    .then(function(result) {
-      if (result.affectedRows == 0) {
-        return res.status(404).end();
-      } else {
-        user = result.dataValues.id;
-        console.log(user);
-        res.status(200).json(result);
-        // userId = result.userId;
-      }
-    });
+  // 5. Create a JWT token
+  const token = createToken(result.dataValues.id);
 
-  // Create a token
-  const token = createToken(user);
-  console.log("Token: ", token);
-
-  // Send a respond with cookie: Prevents from accessing/modifying the cookie from anywhere except http browser. Expires after 1 hour.
+  // 6. Send a respond with cookie: Prevents from accessing/modifying the cookie from anywhere except http browser. Expires after 1 hour.
   res
     .cookie("jwt", token, {
       maxAge: 3600000,
@@ -73,61 +60,57 @@ exports.signup = catchAsync(async (req, res, next) => {
     });
 });
 
-// *LOG IN
+//! LOGIN
 exports.login = catchAsync(async (req, res, next) => {
+  // 1. Get login info from request
   const { username, password } = req.body;
 
-  // Validation 1.Check if username and password exist
+  // 2. Validation(a): Check if username and password exist
   if (!username || !password) {
-    return next(new Error("Please provide email and password.", 400));
+    return next(new ErrorFactory(400, "Please provide email and password."));
   }
 
-  // Validation 2. Check if there is a user matching to the input username
-  //! [Sequelize] bring a user matching the username(user)
-  // const encryptedPwd = await bcrypt.hash(password, 12);
-  //![Sequelize] Need to get user info from user table
-  // console.log("db.User: ", db);
+  // 3. Bring user data matching to the username from DB
+  const result = await db.user.findOne({ where: { username } });
 
-  let user;
+  // 4. Validation(b): Check if there is a matching user and user's input password is same as that of DB(return Boolean)
+  if (
+    !result ||
+    !(await bcrypt.compare(password, result.dataValues.password))
+  ) {
+    return next(
+      new ErrorFactory(
+        401,
+        "There is no such a user or you typed the password wrong!"
+      )
+    );
+  }
 
-  db.user.findOne({ where: { username } }).then(async function(result) {
-    // console.log("result: ", result);
-    if (result === null) {
-      console.info("user.login: username/password combination not found");
-      return res.status(404).end();
-    } else {
-      user = result.dataValues;
+  // 5. Create JWT token with user's id
+  const token = createToken(result.dataValues.id);
 
-      console.log("encrypted pwd: ", user.password, "input pwd: ", password);
-
-      // Validation 3. Check if user's input password is same as the password from DB(return Boolean)
-      const isCorrectedPwd = await bcrypt.compare(password, user.password);
-      console.log("isCorrectedPwd: ", isCorrectedPwd);
-      // If there is NO user found in DB or the password is wrong, generate error.
-      if (!user || !isCorrectedPwd) {
-        return next(new Error("There is no such a user or you typed the password wrong!", 401));
-      }
-
-      // Create a token
-      const token = createToken(user.id);
-
-      res
-        .cookie("jwt", token, {
-          maxAge: 3600000,
-          httpOnly: true
-        })
-        .status(200)
-        .json({
-          status: "success",
-          message: "You are logged in successfully!",
-          token
-        });
-    }
-  });
+  // 6. Send a response
+  res
+    .cookie("jwt", token, {
+      maxAge: 3600000,
+      httpOnly: true
+    })
+    .status(200)
+    .json({
+      status: "success",
+      message: "You are logged in successfully!",
+      token
+    });
 });
 
-//* LOG OUT : Clear cookie having a token
+//! LOGOUT : Clear cookie having a JWT token
 exports.logout = catchAsync(async (req, res, next) => {
+  // Check if a user is logged out
+  if (!req.cookies.jwt) {
+    return next(new ErrorFactory(400, "You are already logged out!"));
+  }
+
+  // Clear cookie and token so the user can logout
   res
     .clearCookie("jwt")
     .status(200)
@@ -137,38 +120,37 @@ exports.logout = catchAsync(async (req, res, next) => {
     });
 });
 
-//* PROTECT : Protects other middlewares coming after this middleware( Not allow to access to next middlewares if a request fails to be verified here for its authentication )
+//! PROTECT Middleware
+//Protects other middlewares coming after this middleware(Not allow to access to next middlewares if a request fails to be verified here for its authentication)
 exports.protect = catchAsync(async (req, res, next) => {
-  console.log("This is protect middleware");
-
-  // Check if the request has a token and save it in variable.
-  console.log("authorization", req.cookies.jwt);
+  // 1. Check if a user is logged in(via JWT)
   const token = req.cookies.jwt;
 
   if (!token) {
-    return next(new Error("You are not logged in! Please log in first.", 401));
+    return next(
+      new ErrorFactory(401, "You are not logged in! Please log in first.")
+    );
   }
 
-  // Verify the token and get the request's userId
+  // 2. Verify the token and get user's id from it
   const decodedJwt = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-  console.log(decodedJwt); // format: { userId: 123, iat: 1582066423, exp: 1582070023 }
+  console.log("✨ decoded JWT: ", decodedJwt); // format: { userId: 123, iat: 1582066423, exp: 1582070023 }
 
-  // Check if there is a user matching to that userId from DB
-  //! [Sequelize] Find the user matching to decodedJwt's userId
-  // below user is for test(password: encrypted pwd of "test1234")
-  const user = {
-    id: 123,
-    firstName: "Emily",
-    lastName: "Yu",
-    username: "bluerain",
-    password: "$2a$12$cojKnsNr/Woe9k0V5IEvPuDPkvNPiUavZVT4fUKUSRjIgwr999igS"
-  };
+  // 3. Check if there is a user matching to that id from DB
+  const result = await db.user.findByPk(decodedJwt.userId);
 
-  if (!user) {
-    return next(new Error("The user belonging to this token doesn't exist any longer.", 401));
+  if (!result) {
+    return next(
+      new ErrorFactory(
+        401,
+        "The user belonging to this token doesn't exist any longer."
+      )
+    );
   }
 
-  // Save user info to request in order to use it in next controllers.
-  req.user = user;
+  // 4. Save user info to request in order to use it in next controllers.
+  req.user = result.dataValues;
+  console.log("🤡 user: ", req.user);
+
   next();
 });
