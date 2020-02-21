@@ -1,81 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
     <!-- Import Icons and Fonts -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat|Montserrat+Subrayada&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/a53d2090f6.js" crossorigin="anonymous"></script>
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat|Montserrat+Subrayada&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/a53d2090f6.js"
+      crossorigin="anonymous"
+    ></script>
 
     <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/style.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link rel="stylesheet" type="text/css" href="assets/style.css" />
     <!-- Social share buttons -->
     <!-- <script type="text/javascript"
         src="https://platform-api.sharethis.com/js/sharethis.js#property=5df06909b6d3970012ea51a3&product=inline-share-buttons"
         async="async"></script> -->
 
     <title>Movie Map</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <nav id="nav-bar" role="navigation">
-        <div class="nav-wrapper container">
-            <a id="logo-container" href="#" class="brand-logo">Movie Map</a>
-            <ul class="nav-options">
-                <!--hide-on-med-and-down-->
-                <!-- right -->
-                <li><a href="index.html">Home</a></li>
-                <!-- <li><a id="favoriteMenu" class="favorite_list" href="#modal-favorite">Watchlist
+      <div class="nav-wrapper container">
+        <a id="logo-container" href="#" class="brand-logo">Movie Map</a>
+        <ul class="nav-options">
+          <!--hide-on-med-and-down-->
+          <!-- right -->
+          <li><a href="index.html">Home</a></li>
+          <!-- <li><a id="favoriteMenu" class="favorite_list" href="#modal-favorite">Watchlist
                     </a>
                 </li> -->
-                <li><a id="settings-link" href="#"><i class="fas fa-cog"></i></a></li>
-                <li><a href="#">Our Story</a></li>
-                <li><a href="#">Our Team</a></li>
-            </ul>
-            <!-- <ul id="nav-mobile" class="sidenav">
+          <li>
+            <a id="settings-link" href="#"><i class="fas fa-cog"></i></a>
+          </li>
+          <li><a href="#">Our Story</a></li>
+          <li><a href="#">Our Team</a></li>
+        </ul>
+        <!-- <ul id="nav-mobile" class="sidenav">
                 <li><a href="#">Navbar Link</a></li>
             </ul>
             <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a> -->
-            <div id="index-banner" class="container">
-                <div class="section no-pad-bot">
-                    <div class="container">
-                        <form>
-                            <div class="input-field col s12">
-                                <select id="select-genre">
-                                    <option value="" disabled selected>Choose genre</option>
-                                    <option value="28">Action</option>
-                                    <option value="12">Adventure</option>
-                                    <option value="16">Animation</option>
-                                    <option value="35">Comedy</option>
-                                    <option value="80">Crime</option>
-                                    <option value="99">Documentary</option>
-                                    <option value="18">Drama</option>
-                                    <option value="10751">Family</option>
-                                    <option value="14">Fantasy</option>
-                                    <option value="36">History</option>
-                                    <option value="27">Horror</option>
-                                    <option value="10402">Music</option>
-                                    <option value="9648">Mistery</option>
-                                    <option value="10749">Romance</option>
-                                    <option value="878">Science Fiction</option>
-                                    <option value="10770">TV Movie</option>
-                                    <option value="53">Thriller</option>
-                                    <option value="10752">War</option>
-                                    <option value="37">Western</option>
-                                </select>
-                                <label>Materialize Select</label>
-                            </div>
-                            <!-- <input type="text" placeholder="Search Movies" id="srch-input"> -->
-                        </form>
-                    </div>
+        <div id="index-banner" class="container">
+          <div class="section no-pad-bot">
+            <div class="container">
+              <form>
+                <div class="input-field col s12">
+                  <select id="select-genre">
+                    <option value="" disabled selected>Choose genre</option>
+                    <option value="28">Action</option>
+                    <option value="12">Adventure</option>
+                    <option value="16">Animation</option>
+                    <option value="35">Comedy</option>
+                    <option value="80">Crime</option>
+                    <option value="99">Documentary</option>
+                    <option value="18">Drama</option>
+                    <option value="10751">Family</option>
+                    <option value="14">Fantasy</option>
+                    <option value="36">History</option>
+                    <option value="27">Horror</option>
+                    <option value="10402">Music</option>
+                    <option value="9648">Mistery</option>
+                    <option value="10749">Romance</option>
+                    <option value="878">Science Fiction</option>
+                    <option value="10770">TV Movie</option>
+                    <option value="53">Thriller</option>
+                    <option value="10752">War</option>
+                    <option value="37">Western</option>
+                  </select>
+                  <label>Materialize Select</label>
                 </div>
+                <!-- <input type="text" placeholder="Search Movies" id="srch-input"> -->
+              </form>
             </div>
+          </div>
         </div>
+      </div>
     </nav>
 
     <!-- <div id="index-banner" class=" class-content collection">
@@ -90,8 +103,7 @@
     </div> -->
 
     <div class="carousel" id="movies">
-
-        <div class="carousel-item">
+      <!-- <div class="carousel-item">
             <div class="card-image">
                 <img src="assets\img\film-joker.jpg"> </img>
             </div>
@@ -127,34 +139,37 @@
             <div class="card-action">
                 <a href="#">This is a link</a>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <div class="card horizontal">
-        <h2 class="header">Horizontal Card</h2>
-        <div class="card-stacked">
-            <div class="card-content">
-                <p>I am a very simple card. I am good at containing small bits of information.</p>
-            </div>
-            <div class="card-action">
-                <a href="#">This is a link</a>
-            </div>
+      <h2 class="header">Horizontal Card</h2>
+      <div class="card-stacked">
+        <div class="card-content">
+          <p>
+            I am a very simple card. I am good at containing small bits of
+            information.
+          </p>
         </div>
+        <div class="card-action">
+          <a href="#">This is a link</a>
+        </div>
+      </div>
     </div>
 
     <footer class="page-footer blue">
-        <div class="footer-copyright center">
-            <div class="container"><a class="white-text" href="">Fantastic 404</a>
-            </div>
+      <div class="footer-copyright center">
+        <div class="container">
+          <a class="white-text" href="">Fantastic 404</a>
         </div>
+      </div>
     </footer>
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script type="text/javascript" src="/scripts/overview.js"></script>
-</body>
-
+  </body>
 </html>
