@@ -40,6 +40,9 @@ h5 {
     font-family: 'Montserrat Subrayada', sans-serif;
 }
 
+.carousel {
+    margin-bottom: 20px;
+}
 .card-image.img {
   height: 150px !important;
 }
@@ -53,6 +56,7 @@ h5 {
  }
 /***************************** Information Card CSS *************************************************/
 .info-card {
+    /* display: none !important; */
     margin-right: 17%;
     margin-left: 17%;
     height: 300px;
@@ -87,6 +91,8 @@ h5 {
     background-color: #48668c;
 }
 /***************************** End Footer CSS **********************************/
+
+/**************************** Media Queries *************************************/
 @media only screen and (max-width: 1050px) {
     nav {
         height: 115px;
