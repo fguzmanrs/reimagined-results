@@ -1,14 +1,18 @@
 const axios = require("axios");
-const catchAsync = require("../utill/catchAsync");
-var db = require("../models");
 const Sequelize = require("sequelize");
+var db = require("../models");
 const Op = Sequelize.Op;
 
+const catchAsync = require("../utill/catchAsync");
+const ErrorFactory = require("../utill/errorFactory");
+
+//! Get the recent movies(within 1 year)
+// required parameter: none
 exports.getRecentMovies = catchAsync(async (req, res, next) => {
   const currentDate = new Date();
   const lastYear = currentDate.getFullYear() - 1;
-  const month = `0${currentDate.getMonth() + 1}`.slice(-2);
-  const date = `0${currentDate.getDate()}`.slice(-2);
+  const month = `0${currentDate.getMonth() + 1}`.slice(-2); // 2 digit
+  const date = `0${currentDate.getDate()}`.slice(-2); // 2 digit
   const oneYearBefore = `${lastYear}-${month}-${date}`;
 
   const tmdbUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte=${oneYearBefore}`;
@@ -22,10 +26,12 @@ exports.getRecentMovies = catchAsync(async (req, res, next) => {
   });
 });
 
+//! Get movie info: detail + keyword
+// required parameter: TMDB id
 exports.getMovieDetail = catchAsync(async (req, res, next) => {
-  const tbmdId = req.params.tbmdId;
-  const tmdbUrlDetail = `https://api.themoviedb.org/3/movie/${tbmdId}?api_key=${process.env.TMDB_API_KEY}&language=en-US`;
-  const tmdbUrlKeyword = `https://api.themoviedb.org/3/movie/${tbmdId}/keywords?api_key=${process.env.TMDB_API_KEY}`;
+  const tmdbId = req.params.tmdbId;
+  const tmdbUrlDetail = `https://api.themoviedb.org/3/movie/${tmdbId}?api_key=${process.env.TMDB_API_KEY}&language=en-US`;
+  const tmdbUrlKeyword = `https://api.themoviedb.org/3/movie/${tmdbId}/keywords?api_key=${process.env.TMDB_API_KEY}`;
 
   const detail = await axios(tmdbUrlDetail);
   const keyword = await axios(tmdbUrlKeyword);
@@ -38,7 +44,9 @@ exports.getMovieDetail = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getProviders = catchAsync(async function (req, res, next) {
+//! Get on demand service providers for specific movie(Netflix, Amazon prime etc)
+// required parameter: movie title
+exports.getProviders = catchAsync(async function(req, res, next) {
   const movieToSearch = req.params.movieTitle;
 
   const movies = await axios({
@@ -54,11 +62,23 @@ exports.getProviders = catchAsync(async function (req, res, next) {
       country: "us"
     }
   });
+  console.log("🍒 movie provider: ", movies.data.results);
 
   // Filter the movies having the exact same name with the search term
+  // (* Utelly DB provides a partial search so all similar name's movies are searched.)
   const filteredMovie = movies.data.results.filter(
     el => el.name.toLowerCase() === movieToSearch.toLowerCase()
   );
+
+  // Error handling : If there is no data user are searching, create custom error
+  if (filteredMovie.length === 0) {
+    return next(
+      new ErrorFactory(
+        404,
+        "There is no such a data you requested. Please provide with the correct info."
+      )
+    );
+  }
 
   res.status(200).json({
     status: "success",
@@ -66,6 +86,8 @@ exports.getProviders = catchAsync(async function (req, res, next) {
   });
 });
 
+//! Recommend movies based on a genre id, keyword id
+// required parameter: TMDB genre id, keyword id
 exports.getRecommendation = catchAsync(async (req, res, next) => {
   const { genreId, keywordId } = req.params;
 
@@ -79,58 +101,57 @@ exports.getRecommendation = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.postToMovieDatabase = catchAsync(async (req, res, next) => {
-  const { title, overview, genreId, popularity, posterPath, releaseDate, keywordId, tmdbRate, tmdbId } = req.params;
-  //![Sequelize] Need a data insert to review table(genreId, keywordId)
-  db.movie.create({
-    title: title,
-    overview: overview,
-    genreId: genreId,
-    popularity: popularity,
-    posterPath: posterPath,
-    releaseDate: releaseDate,
-    keywordId: keywordId,
-    tmdbRate: tmdbRate,
-    tmdbId: tmdbId
-  }).then(function (result) {
-    res.status(200).json(result);
+//! Post a movie to DB
+// required info via req.body: title, overview, genreId, popularity, posterPath, releaseDate, keywordId(stringified array), tmdbRate, tmdbId(stringified array)
+exports.createMovie = catchAsync(async (req, res, next) => {
+  console.log("🍉 req.body: ", req.body);
+
+  const createdMovie = await db.movie.create(req.body);
+
+  res.status(201).json({
+    status: "success",
+    data: createdMovie
   });
 });
 
-exports.getMovieByKeyword = catchAsync(async (req, res, next) => {
-  const { keywordId } = req.params;
-  db.movie.findAll({
-    where: {
-      keywordId: { [Op.like]: '%' + keywordId + '%' }
-    }
-  }).then(function (result) {
-    if (result.affectedRows == 0) {
-      return res.status(404).end();
-    } else {
-      res.status(200).json(result);
-    }
-  });
-});
+// exports.getMovieByKeyword = catchAsync(async (req, res, next) => {
+//   const { keywordId } = req.params;
+//   db.movie
+//     .findAll({
+//       where: {
+//         keywordId: { [Op.like]: "%" + keywordId + "%" }
+//       }
+//     })
+//     .then(function(result) {
+//       if (result.affectedRows == 0) {
+//         return res.status(404).end();
+//       } else {
+//         res.status(200).json(result);
+//       }
+//     });
+// });
 
-exports.getMovieByGenre = catchAsync(async (req, res, next) => {
-  const { genreId } = req.params;
-  db.movie.findAll({
-    where: {
-      keywordId: { [Op.like]: '%' + keywordId + '%' }
-    }
-  }).then(function (result) {
-    if (result.affectedRows == 0) {
-      return res.status(404).end();
-    } else {
-      res.status(200).json(result);
-    }
-  });
-});
+// exports.getMovieByGenre = catchAsync(async (req, res, next) => {
+//   const { genreId } = req.params;
+//   db.movie
+//     .findAll({
+//       where: {
+//         keywordId: { [Op.like]: "%" + keywordId + "%" }
+//       }
+//     })
+//     .then(function(result) {
+//       if (result.affectedRows == 0) {
+//         return res.status(404).end();
+//       } else {
+//         res.status(200).json(result);
+//       }
+//     });
+// });
 
 exports.getMovieById = catchAsync(async (req, res, next) => {
   const { id } = req.params;
   //![Sequelize] Need to get user info from user table
-  db.watchlist.findOne({ where: { id: id } }).then(function (result) {
+  db.watchlist.findOne({ where: { id: id } }).then(function(result) {
     if (result.affectedRows == 0) {
       return res.status(404).end();
     } else {
