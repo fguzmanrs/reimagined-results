@@ -51,10 +51,12 @@ exports.getProviders = catchAsync(async function(req, res, next) {
 
   const movies = await axios({
     method: "GET",
-    url: "https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/lookup",
+    url:
+      "https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/lookup",
     headers: {
       "content-type": "application/octet-stream",
-      "x-rapidapi-host": "utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com",
+      "x-rapidapi-host":
+        "utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com",
       "x-rapidapi-key": process.env.UTELLY_API_KEY
     },
     params: {
@@ -93,7 +95,7 @@ exports.getRecommendation = catchAsync(async (req, res, next) => {
   // const { genreId, keywordId } = req.params;
   // const tmdbUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genreId}&with_keywords=${keywordId}`;
 
-  const { genreId} = req.params;
+  const { genreId } = req.params;
   const tmdbUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genreId}`;
 
   const movies = await axios(tmdbUrl);
