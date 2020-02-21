@@ -40,9 +40,8 @@ h5 {
     font-family: 'Montserrat Subrayada', sans-serif;
 }
 
-.card-image.img
-{
-  height:150px; !important
+.card-image.img {
+  height: 150px !important;
 }
 
 .material-icons.md1::before{
@@ -51,7 +50,43 @@ h5 {
 
 .material-icons.md1:hover::before{
   content:"navigate_next"; 
+ }
+/***************************** Information Card CSS *************************************************/
+.info-card {
+    margin-right: 17%;
+    margin-left: 17%;
+    height: 300px;
+    width: 66%;
+    border-radius: 20px;
+    border: 0.5px solid lightgrey;
+    background-color: #e6e0e0
+}
 
+#header {
+    padding: 0px 16px 24px 16px;
+}
+
+.info-list {
+    margin-left: 20px;
+    line-height: 28px;
+}
+
+#info-link {
+    padding: 0px;
+    margin-top: 20px;
+    border-top: none;
+}
+/***************************** Information Card CSS ************************************************/
+
+/***************************** Footer CSS **************************************/
+.page-footer.blue {
+    background-color: #62A4C1 !important;
+}
+
+.footer-copyright.center {
+    background-color: #48668c;
+}
+/***************************** End Footer CSS **********************************/
 @media only screen and (max-width: 1050px) {
     nav {
         height: 115px;

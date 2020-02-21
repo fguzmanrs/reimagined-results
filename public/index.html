@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="UTF-8">
@@ -10,128 +10,40 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat|Montserrat+Subrayada&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a53d2090f6.js" crossorigin="anonymous"></script>
 
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/style.css">
-  
-    <!-- Social share buttons -->
-    <!-- <script type="text/javascript"
-        src="https://platform-api.sharethis.com/js/sharethis.js#property=5df06909b6d3970012ea51a3&product=inline-share-buttons"
-        async="async"></script> -->
+    <link type="text/css" rel="stylesheet" href="assets/login.css" media="screen,projection" />
 
-    <title>Movie Map</title>
 </head>
 
 <body>
-    <nav id="nav-bar" role="navigation">
-        <div class="nav-wrapper container">
-            <a id="logo-container" href="#" class="brand-logo">Movie Map</a>
-            <ul class="nav-options"> <!--hide-on-med-and-down--> <!-- right -->
-                <li><a href="index.html">Home</a></li>
-                <li><a id="favoriteMenu" class="favorite_list" href="#modal-favorite">Watchlist
-                    </a>
-                </li>
-                <li><a id="settings-link" href="#"><i class="fas fa-cog"></i></a></li>
-                <li><a href="#">Our Story</a></li>
-                <li><a href="#">Our Team</a></li>
-            </ul>
-                        
-            <!-- <ul id="nav-mobile" class="sidenav">
-                <li><a href="#">Navbar Link</a></li>
-            </ul>
-            <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a> -->
-            <div id="index-banner" class="container">
-                <div class="section no-pad-bot">
-                    <div class="container">
-                      <div>  
-                            <input type="text" placeholder="Search Movies" id="srch-input">                
-                       </div> 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
 
-    <div id="index-banner" class=" class-content collection">
-        <form id="search-card" class="input-field container">
-            <div>
-                <input type="text" pattrn="[a-za-Z\s]{2,100}" required placeholder="Search Genre" id="inputG">
-                <span class="validity" hidden></span>
+    <div class="main">
+        <p class="sign" align="center">Welcome Back to Movie Map!</p>
+        <div class="row center">
+            <h5 class="header col s12 light">A modern responsive movie recommendation matrix based on your
+                personal preferences.</h5>
+        </div>
+        <form class="form1">
+            <input class="user" id="username" type="text" align="center"
+                placeholder="Username" autocapitalize="off" autocorrect="off">
+            <div class="input-container">
+                <input type="password" class="pass browser-default" id="password" align="center"
+                    placeholder="Password">
+                <i class="material-icons visibility" style=color:grey>visibility_off</i>
             </div>
-            <ul id="searchList"></ul>
-            <button class="btn waves-effect waves-light" id="searchBtn" href="#search">Movie Time!</button>
+            <a class="submit waves-effect waves-light btn" align="center">Let me in</a>
+            <!-- <p class="remember_me">
+                <label>
+                  <input type="checkbox" name="remember_me" id="remember_me">
+                  Remember me
+                </label>
+            </p> -->
+            <p class="new-account" align="center"><a href="./signUp.html">Are you new? Create an Account</p>
         </form>
     </div>
 
-    <h5 class="header col s12 light" style="text-align:center">RECOMMENDATIONS #1
-    </h5>
+    <!--JavaScript-->
+    <script type="text/javascript" src="scripts/startup.js"></script>
 
-    <div class="carousel" id="movies">
-
-        <div class="carousel-item">
-            <div class="card-image">
-                <img src="assets\img\film-joker.jpg"> </img>
-            </div>
-            <div class="card-content">
-                <span class="card-title">Movie Title</span>
-                <p>I am a very simple card.</p>
-            </div>
-            <div class="card-action">
-
-            </div>
-        </div>
-        <div class="carousel-item">
-            <div class="card-image">
-                <img src="assets\img\film-us.jpg"> </img>
-            </div>
-
-            <div class="card-content">
-                <span class="card-title">Movie Title</span>
-                <p>I am a very simple card.</p>
-            </div>
-            <div class="card-action">
-                <a href="#">This is a link</a>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <div class="card-image">
-                <img src="assets\img\film-redSparrow.jpg"> </img>
-            </div>
-            <div class="card-content">
-                <span class="card-title">Movie Title</span>
-                <p>I am a very simple card.</p>
-            </div>
-            <div class="card-action">
-                <a href="#">This is a link</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="card horizontal">
-        <h2 class="header">Horizontal Card</h2>
-        <div class="card-stacked">
-            <div class="card-content">
-                <p>I am a very simple card. I am good at containing small bits of information.</p>
-            </div>
-            <div class="card-action">
-                <a href="#">This is a link</a>
-            </div>
-        </div>
-    </div>
-
-    <footer class="page-footer blue">
-        <div class="footer-copyright center">
-            <div class="container"><a class="white-text" href="">Fantastic 404</a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script type="text/javascript" src="scripts/index.js"></script>
 </body>
 
 </html>
