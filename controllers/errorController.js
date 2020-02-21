@@ -15,8 +15,8 @@ exports.globalErrorHandler = (err, req, res, next) => {
     res.status(err.statusCode).json({
       status: err.status,
       message: err.message,
-      stack: err.stack,
-      error: err
+      error: err,
+      stack: err.stack
     });
   }
   //* CASE 2: when it's in production mode
@@ -53,14 +53,25 @@ exports.globalErrorHandler = (err, req, res, next) => {
       );
     }
 
-    //* CASE 2.2 : When it's an operational err, show user friendly message
+    //* CASE 2.2 : Catch err coming from 3rd party APIs(TMDB, Utelly)
+    //? A. There is no such a data
+    if (err.message === "Request failed with status code 404") {
+      console.log("🍇 3rd party APIs cannot find any wanted data");
+
+      err = new ErrorFactory(
+        404,
+        "The requested data doesn't exist in our external servers. Please try again with the accurate info."
+      );
+    }
+
+    //* CASE 2.3 : When it's an operational err, show user friendly message
     if (err.isOperational) {
       res.status(err.statusCode).json({
         status: err.status,
         message: err.message
       });
     }
-    //* CASE 2.3 : When it's a programing err, show general err message
+    //* CASE 2.4 : When it's a programing err, show general err message
     else {
       res.status(500).json({
         status: "error",
