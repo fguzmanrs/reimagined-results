@@ -15,9 +15,10 @@ router.get("/logout", authController.logout);
 // Get user info
 router.get("/:userId", userController.getUserInfo);
 
+// Create a reivew(grade: like(1), none(0), dislike(-1))
 router.post("/review/:userId/:movieId/:grade", reviewController.postReview);
 
-// When user add a movie to watchlist, post user's preference for movies(genre, keywords)
+// CRUD for watchlist
 router.get("/watchlist/:userId", userController.getMyWatchList);
 router.post("/watchlist/:userId/:movieId", userController.postToMyWatchlist);
 router.put("/watchlist/:userId/:movieId", userController.removeFromMyWatchlist);
