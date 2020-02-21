@@ -1,17 +1,5 @@
 $(document).ready(async () => {
-  try {
-    // GET RECENT MOVIES
-    const result = await axios("/api/movies/recent");
-
-    const recentMovies = result.data.data;
-    console.log("recent movies: ", recentMovies);
-
-    // RENDER carousel with movies
-    refreshCarousel(recentMovies);
-  } catch (err) {
-    console.log("error occured!");
-    alert(err);
-  }
+  getAndRenderCarousel();
 
   //
   $("select").formSelect();
@@ -54,6 +42,21 @@ $(document).ready(async () => {
   //     }
   //   });
   // });
+
+  async function getAndRenderCarousel() {
+    try {
+      // GET RECENT MOVIES
+      const result = await axios("/api/movies/recent");
+      const recentMovies = result.data.data;
+      console.log("recent movies: ", recentMovies);
+
+      // RENDER carousel with movies
+      refreshCarousel(recentMovies);
+    } catch (err) {
+      console.log("error occured!");
+      alert(err);
+    }
+  }
 
   // Carousel Generator
   function refreshCarousel(arr) {
