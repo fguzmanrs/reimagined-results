@@ -24,7 +24,7 @@ exports.globalErrorHandler = (err, req, res, next) => {
     //* CASE 2.1: Catch err coming from DB and make it custom err
 
     //? A. Unique Constraint Err
-    // ie: duplicated tmdbId when creating a movie, already existing username etc...
+    // e.g.: duplicated tmdbId when creating a movie, already existing username etc...
     if (err.name === "SequelizeUniqueConstraintError") {
       const errItem = err.errors[0];
 
@@ -45,7 +45,7 @@ exports.globalErrorHandler = (err, req, res, next) => {
     }
 
     //? C. Foreign Key Constraint Err
-    // ei: when creating a discovered with user id, movie id(both foreign keys), there is no such a user or movie in DB matching to the requested info
+    // e.g.: when creating a discovered with user id, movie id(both foreign keys), there is no such a user or movie in DB matching to the requested info
     if (err.name === "SequelizeForeignKeyConstraintError") {
       err = new ErrorFactory(
         400,
