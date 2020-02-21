@@ -1,8 +1,10 @@
 const axios = require("axios");
-const catchAsync = require("../utill/catchAsync");
-var db = require("../models");
 const Sequelize = require("sequelize");
+var db = require("../models");
 const Op = Sequelize.Op;
+
+const catchAsync = require("../utill/catchAsync");
+const ErrorFactory = require("../utill/errorFactory");
 
 //! Get the recent movies(within 1 year)
 // required parameter: none
@@ -62,11 +64,23 @@ exports.getProviders = catchAsync(async function(req, res, next) {
       country: "us"
     }
   });
+  console.log("🍒 movie provider: ", movies.data.results);
 
   // Filter the movies having the exact same name with the search term
+  // (* Utelly DB provides a partial search so all similar name's movies are searched.)
   const filteredMovie = movies.data.results.filter(
     el => el.name.toLowerCase() === movieToSearch.toLowerCase()
   );
+
+  // Error handling : If there is no data user are searching, create custom error
+  if (filteredMovie.length === 0) {
+    return next(
+      new ErrorFactory(
+        404,
+        "There is no such a data you requested. Please provide with the correct info."
+      )
+    );
+  }
 
   res.status(200).json({
     status: "success",
