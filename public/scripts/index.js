@@ -1,12 +1,10 @@
 // const axios = require("axios").default;
 
-// turns on/off pw visibility (PJS)
 $(document).ready(() => {
+  // turns on/off pw visibility (PJS)
   const visibilityToggle = document.querySelector(".visibility");
-
   const input = document.querySelector(".pass");
-
-  var pwVisible = false;
+  let pwVisible = false;
 
   visibilityToggle.addEventListener("click", function() {
     if (pwVisible === false) {
@@ -19,23 +17,22 @@ $(document).ready(() => {
   });
 
   $("#loginBtn").on("click", async e => {
-    console.log("clicked");
-    const username = $("#username").val();
-    const password = $("#password").val();
+    try {
+      const username = $("#username").val();
+      const password = $("#password").val();
 
-    console.log("input: ", username, password);
-    const result = await axios.post("/api/users/login", {
-      username,
-      password
-    });
+      console.log("input: ", username, password);
+      const result = await axios.post("/api/users/login", {
+        username,
+        password
+      });
 
-    console.log(result);
-    if (result.status === 200) {
+      console.log(result);
+
       location.assign("/overview.html");
       console.log("login succeded!");
-    } else {
-      alert("fail");
-      console.log("login failed!");
+    } catch (err) {
+      alert("Incorrect username or password");
     }
   });
 
