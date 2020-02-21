@@ -1,18 +1,9 @@
-const visibilityToggle = document.querySelector(".visibility");
 
-const input = document.querySelector(".pass");
+$(document).ready(function(){
+  $('.carousel').carousel({
+        dist:0,
+        shift:0,
+        padding:20,
 
-var pwVisible = false;
-
-visibilityToggle.addEventListener("click", function() {
-  if (pwVisible === false) {
-    input.setAttribute("type", "text");
-    pwVisible = true
-  } else {
-    input.setAttribute("type", "password");
-    pwVisible = false }
+  });
 });
-
-function logIn() {
-  document.getElementById('form1').submit();
-  }
