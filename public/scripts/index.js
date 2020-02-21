@@ -1,9 +1,16 @@
 
-$(document).ready(function(){
-  $('.carousel').carousel({
-        dist:0,
-        shift:0,
-        padding:20,
+// turns on/off pw visibility (PJS)
+const visibilityToggle = document.querySelector(".visibility");
 
-  });
+const input = document.querySelector(".pass");
+
+var pwVisible = false;
+
+visibilityToggle.addEventListener("click", function() {
+  if (pwVisible === false) {
+    input.setAttribute("type", "text");
+    pwVisible = true
+  } else {
+    input.setAttribute("type", "password");
+    pwVisible = false }
 });
