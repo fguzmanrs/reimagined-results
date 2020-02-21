@@ -36,21 +36,17 @@ nav {
     padding: 0px;
 }
 
-h5 {
-    font-family: 'Montserrat Subrayada', sans-serif;
-}
-
 .card-image.img
 {
   height:150px; !important
 }
 
-.material-icons.md1::before{
+/* .material-icons.md1::before{
   content:"search"; 
-}
+} */ 
 
-.material-icons.md1:hover::before{
-  content:"navigate_next"; 
+/* .material-icons.md1:hover::before{
+  content:"navigate_next";  */
 
 @media only screen and (max-width: 1050px) {
     nav {
