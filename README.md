@@ -1,8 +1,7 @@
-Project name:  Movie Map App
+## Movie Map App
 
-Description: The "" project has been created to "" and is able to "".
-
-Table of Contents: (Optional) Include if long/detailed READMEs
+## Description: 
+The Movie Map App has been created to "" and is able to "".
 
 ## Prerequisites
 **Web browser.** - *We recommend Google Chrome.*
