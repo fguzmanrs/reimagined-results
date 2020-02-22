@@ -1,6 +1,6 @@
 // const axios = require("axios").default;
 
-$(document).ready(() => {
+$(document).ready(function() {
   // turns on/off pw visibility (PJS)
   const visibilityToggle = document.querySelector(".visibility");
   const input = document.querySelector(".pass");
@@ -32,7 +32,9 @@ $(document).ready(() => {
       location.assign("/overview.html");
       console.log("login succeded!");
     } catch (err) {
-      alert("Incorrect username or password");
+      $("#alert")
+        .text(err.response.data.message)
+        .css("color", "red");
     }
   });
 
@@ -41,10 +43,10 @@ $(document).ready(() => {
 
     location.assign("/signUp.html");
   });
+
+  // Modal for error message
+  // M.AutoInit();
+  // const instance = M.Modal.getInstance($(".modal"));
+
+  // instance.open();
 });
-
-// $(document).ready(function(){
-// the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-//  $('.modal-trigger').leanModal();
-
-// });
