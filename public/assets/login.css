@@ -137,12 +137,12 @@ form.form1 {
     top: 50%;
     left: 50%;
     display: none;
-
+}
 
 a {
     text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
     color: #62a4c1;
-    text-decoration: none
+    text-decoration: none;
 }
 
 .team-description {
