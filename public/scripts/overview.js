@@ -8,19 +8,21 @@ $(document).ready(async () => {
 
   $("#select-genre").change(function() {
     // submitted
-    // alert("genreId: " + $('#select-genre').val());
+    alert("genreId: " + $('#select-genre').val());
 
-    var searching = $("#select-genre").val();
+    var genre = $("#select-genre").val();
     // getRecommendation
     // convert to dropdownmenu
     $.ajax({
-      url: `/api/movies/recommend/${searching}`,
+      url: `localhost:3000/api/movies/recommend/${genre}`,
       success: function(result) {
         // check result length, limit to 10
         let len = result.length;
         if (len > 10) len = 10;
+        console.info(result);
 
         // empty movies
+        console.info('overview.js: jquery.movies.empty');
         $("#movies").empty();
 
         // populate up to 10 movies on card
