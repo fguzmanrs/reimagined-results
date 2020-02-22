@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 const movieRouter = require("./routes/movieRouter");
 const userRouter = require("./routes/userRouter");
@@ -11,6 +12,10 @@ const { globalErrorHandler } = require("./controllers/errorController");
 const ErrorFactory = require("./utill/errorFactory");
 
 const app = express();
+
+// Attach Access-Control-Allow-Origin to every req header
+app.use(cors());
+app.options("*", cors());
 
 // Frontend folder location
 app.use(express.static(path.join(__dirname, "public")));
