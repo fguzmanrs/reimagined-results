@@ -45,7 +45,6 @@ exports.getMovieDetail = catchAsync(async (req, res, next) => {
 });
 
 //! Get on demand service providers for specific movie(Netflix, Amazon prime etc)
-//? the data of response calling AJAX from server is different from calling from frontend!!
 // required parameter: movie title
 exports.getProviders = catchAsync(async function(req, res, next) {
   const movieToSearch = req.params.tmdbId;
@@ -66,8 +65,9 @@ exports.getProviders = catchAsync(async function(req, res, next) {
       source: "tmdb"
     }
   });
-  // console.log("🍒 🍒movie provider: ", result);
-  console.log("🍒 result: ", result.data);
+
+  const providersArr = result.data.collection.locations;
+  console.log("🍈 provider results: ", providersArr);
 
   // Filter the movies having the exact same name with the search term
   // (* Utelly DB provides a partial search so all similar name's movies are searched.)
@@ -87,7 +87,7 @@ exports.getProviders = catchAsync(async function(req, res, next) {
 
   res.status(200).json({
     status: "success",
-    data: result.data.collection.location
+    data: providersArr
   });
 });
 
@@ -97,7 +97,7 @@ exports.getProviders = catchAsync(async function(req, res, next) {
 exports.getRecommendation = catchAsync(async (req, res, next) => {
   // const { genreId, keywordId } = req.params;
   // const tmdbUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genreId}&with_keywords=${keywordId}`;
-
+console.info('movieController.getRecommendation();');
   const { genreId } = req.params;
   const tmdbUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genreId}`;
 

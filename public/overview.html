@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -35,7 +35,7 @@
 
   <body>
     <nav id="nav-bar" role="navigation">
-      <div class="nav-wrapper container">
+      <!-- <div class="nav-wrapper container"> -->
         <a id="logo-container" href="#" class="brand-logo">Movie Map</a>
         <ul class="nav-options">
           <!--hide-on-med-and-down-->
@@ -44,51 +44,52 @@
           <!-- <li><a id="favoriteMenu" class="favorite_list" href="#modal-favorite">Watchlist
                     </a>
                 </li> -->
-          <li>
-            <a id="settings-link" href="#"><i class="fas fa-cog"></i></a>
-          </li>
+          <!-- <li>
+            <a id="settings-link" href="#"><i class="fas fa-cog"></i></a> 
+          </li> -->
           <li><a href="ourStory.html">Our Team</a></li>
         </ul>
         <!-- <ul id="nav-mobile" class="sidenav">
                 <li><a href="#">Navbar Link</a></li>
             </ul>
             <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a> -->
-        <div id="index-banner" class="container">
-          <div class="section no-pad-bot">
-            <div class="container">
-              <form>
-                <div class="input-field col s12">
-                  <select id="select-genre">
-                    <option value="" disabled selected>Choose genre</option>
-                    <option value="28">Action</option>
-                    <option value="12">Adventure</option>
-                    <option value="16">Animation</option>
-                    <option value="35">Comedy</option>
-                    <option value="80">Crime</option>
-                    <option value="99">Documentary</option>
-                    <option value="18">Drama</option>
-                    <option value="10751">Family</option>
-                    <option value="14">Fantasy</option>
-                    <option value="36">History</option>
-                    <option value="27">Horror</option>
-                    <option value="10402">Music</option>
-                    <option value="9648">Mistery</option>
-                    <option value="10749">Romance</option>
-                    <option value="878">Science Fiction</option>
-                    <option value="10770">TV Movie</option>
-                    <option value="53">Thriller</option>
-                    <option value="10752">War</option>
-                    <option value="37">Western</option>
-                  </select>
-                  <label>Materialize Select</label>
-                </div>
-                <!-- <input type="text" placeholder="Search Movies" id="srch-input"> -->
-              </form>
+    </nav>
+
+    <div id="index-banner" class="container">
+      <div class="section no-pad-bot">
+        <div class="container">
+          <form>
+            <div class="input-field col s12">
+              <select id="select-genre">
+                <option value="" disabled selected>Choose genre</option>
+                <option value="28">Action</option>
+                <option value="12">Adventure</option>
+                <option value="16">Animation</option>
+                <option value="35">Comedy</option>
+                <option value="80">Crime</option>
+                <option value="99">Documentary</option>
+                <option value="18">Drama</option>
+                <option value="10751">Family</option>
+                <option value="14">Fantasy</option>
+                <option value="36">History</option>
+                <option value="27">Horror</option>
+                <option value="10402">Music</option>
+                <option value="9648">Mystery</option>
+                <option value="10749">Romance</option>
+                <option value="878">Science Fiction</option>
+                <option value="10770">TV Movie</option>
+                <option value="53">Thriller</option>
+                <option value="10752">War</option>
+                <option value="37">Western</option>
+              </select>
+              <!-- <label>Select Genre</label> -->
             </div>
-          </div>
+            <!-- <input type="text" placeholder="Search Movies" id="srch-input"> -->
+          </form>
         </div>
       </div>
-    </nav>
+    </div>
+  </div>
 
     <!-- <div id="index-banner" class=" class-content collection">
         <form id="search-card" class="input-field container">
@@ -100,6 +101,10 @@
             <button class="btn waves-effect waves-light" id="searchBtn" href="#search">Movie Time!</button>
         </form>
     </div> -->
+
+    <h5 class="header col s12 light" style="text-align:center">
+      RECOMMENDATIONS
+    </h5>
 
     <div class="carousel" id="movies">
       <!-- <div class="carousel-item">
@@ -164,6 +169,6 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script type="text/javascript" src="/scripts/overview.js"></script>
+    <script type="text/javascript" src="scripts/overview.js"></script>
   </body>
 </html>

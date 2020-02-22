@@ -1,18 +1,11 @@
-# reimagined-results
-Project #2: App TBD
+## Movie Map App
+Our application has been created to help film buffs who want targeted movie reccomendatios and the information and resources to watch their finds. Our app is able to provide up-to-date information withour requiring a user to search through multiple apps, websites, and subscription services.
 
-Project name: 
-
-Description: The "" project has been created to "" and is able to "".
-
-Table of Contents: (Optional) Include if long/detailed READMEs
-
-Installation: Users who want to install the project locally will need to: (Optional) include a gif for clarity
-
-Usage: To use the project you will need to: (Optional) screenshots of project in action
+## Description
+Using various film APIs we were able to create an app that allows for registered users to receive tailored film recommendations, with information for how to watch the recommended films. In addition, registered users can save their searches and create watchlists. Movie Map saves time by being a one stop film search engine.
 
 ## Prerequisites
-**Web browser.** - *We recommend google chrome.*
+**Web browser.** - *We recommend Google Chrome.*
 
 ## Installing
 N/A - Not applicable - No installation required.

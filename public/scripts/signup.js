@@ -35,7 +35,9 @@ $(document).ready(() => {
         location.assign("/overview.html");
       }
     } catch (err) {
-      alert(err.response.data.message);
+      $("#alert")
+        .text(err.response.data.message)
+        .css("color", "red");
     }
   });
 });
