@@ -1,6 +1,8 @@
 $(document).ready(async () => {
+  //* Get recent popular movies and render to carousel
   await getAndRenderCarousel();
 
+  //* Click event handler for each movie
   $(".carousel-item .card-image").click(unfoldInfo);
 
   //******************************** */
@@ -47,6 +49,7 @@ $(document).ready(async () => {
     });
   });
 
+  //******************************** */
   //! Event handler : unfold movie detail info
   async function unfoldInfo(e) {
     //1. Get movie info
@@ -76,7 +79,7 @@ $(document).ready(async () => {
                         </div>
                         <div class="card-stacked">
                             <div class="card-content">
-                                <div class = "movie-overview"><p></p></div>
+                                <div class = "movie-overview"><p>${info.overview}</p></div>
                             </div>
                             <!-- <div class="card-action">
                                 <a href="#">This is a link</a>
@@ -88,8 +91,9 @@ $(document).ready(async () => {
 
     // Render on demand providers link
     for (provider of providers) {
+      // Generate HTML
       const providersHTML = `<a class = "stream-links" id = ${provider.display_name} href=${provider.url} target="_blank">${provider.display_name}</a>`;
-      console.log($(".card-action"));
+
       $(".card-action").append(providersHTML);
     }
   }
@@ -103,7 +107,7 @@ $(document).ready(async () => {
       console.log("recent movies: ", recentMovies);
 
       // RENDER carousel with movies
-      refreshCarousel(recentMovies);
+      generateCarouselHTML(recentMovies);
     } catch (err) {
       console.log("error occured!");
       alert(err);
@@ -111,7 +115,7 @@ $(document).ready(async () => {
   }
 
   //! Carousel HTML Generator
-  function refreshCarousel(arr) {
+  function generateCarouselHTML(arr) {
     console.log("🍒 refresh carousel");
 
     // populate 20 movies on card
@@ -121,11 +125,6 @@ $(document).ready(async () => {
          <div class="card-image">
            <img src="https://image.tmdb.org/t/p/w154${movie.poster_path}"></img>
          </div>
-         <div class="card-content">
-           <span class="card-title">${movie.title}</span>
-           <p>${movie.overview}</p>
-         </div>
-         <div class="card-action"></div>
        </div>`;
 
       $("#movies").append(carouselItem);
@@ -147,24 +146,9 @@ $(document).ready(async () => {
   async function getProviders(tmdbId) {
     console.log("🥝 inside title", tmdbId);
 
-    const result = await axios({
-      method: "GET",
-      url:
-        "https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/idlookup",
-      headers: {
-        "content-type": "application/octet-stream",
-        "x-rapidapi-host":
-          "utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com",
-        "x-rapidapi-key": "67819abeecmsh692ea2f37f1d046p135d57jsndc363598fa20"
-      },
-      params: {
-        country: "US",
-        source_id: tmdbId,
-        source: "tmdb"
-      }
-    });
+    const result = await axios(`/api/movies/providers/${tmdbId}`);
+    const providersArr = result.data.data;
 
-    const providersArr = result.data.collection.locations;
     console.log("🍈 provider results: ", providersArr);
 
     return providersArr;
