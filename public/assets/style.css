@@ -1,115 +1,256 @@
-body { 
-    font-family:'Montserrat', sans-serif;
-    background: #13111A;
-    background: 
-        -webkit-radial-gradient(0% 100%, circle cover, rgba(104,128,138,.4) 10%, rgba(138,114,76,0) 40%), 
-        -webkit-linear-gradient(top, rgba(57,173,219,.25) 0%, rgba(42,60,87,.4) 100%), 
-        -webkit-linear-gradient(-45deg, #48668c 0%, #0F4C81 10%,#13111A 75%);
+body {
+  font-family: "Montserrat", sans-serif;
+  background: #13111a;
+  background: -webkit-radial-gradient(
+      0% 100%,
+      circle cover,
+      rgba(104, 128, 138, 0.4) 10%,
+      rgba(138, 114, 76, 0) 40%
+    ),
+    -webkit-linear-gradient(top, rgba(57, 173, 219, 0.25) 0%, rgba(
+            42,
+            60,
+            87,
+            0.4
+          )
+          100%),
+    -webkit-linear-gradient(-45deg, #48668c 0%, #0f4c81 10%, #13111a 75%);
 }
 
 nav {
-    height: 135px;
-    background: url("../images/Movies2.jpg") no-repeat center center;
-    background-size: cover; 
+  height: 135px;
+  background: url("../images/Movies2.jpg") no-repeat center center;
+  background-size: cover;
 }
 
 #logo-container {
-    font-size: 60px;
+  color: white;
+  font-size: 100px;
+  margin-top: 40px;
+  margin-left: 40px;
 }
 
 .brand-logo {
-    font-family: 'montserrat subrayada', 'montserrat';
+  font-family: "montserrat subrayada", "montserrat";
 }
 
 .nav-options {
-    float: right;
+  float: right;
+  margin-right: 40px;
+  margin-top: 0px;
 }
 
-#srch-input { 
-    background-color: #fff;
-    opacity: 0.75;
-    border-radius: 15px;
-    height: 30px;
-} 
-
-.section .no-pad-bot{
-    padding: 0px;
+#srch-input {
+  background-color: #fff;
+  opacity: 0.75;
+  border-radius: 15px;
+  height: 30px;
 }
 
-.card-image.img
-{
-  height:150px !important;
+.section .no-pad-bot {
+  padding: 0px;
 }
 
-.material-icons.md1::before{
-  content:"search"; 
+h5 {
+  font-family: "Montserrat Subrayada", sans-serif;
 }
 
-.material-icons.md1:hover::before{
-  content:"navigate_next";
+.carousel {
+  margin-bottom: 20px;
+}
+.card-image.img {
+  height: 150px !important;
 }
 
-@media only screen and (max-width: 1050px) {
-    nav {
-        height: 115px;
-    }
-    
-    #logo-container{
-        width: 100%;
-        text-align: center;
-        display: block;
-    }
-    .nav-options {
-        position: relative;
-        margin-left: auto;
-        margin-right: auto;
+.material-icons.md1::before {
+  content: "search";
+}
+
+.material-icons.md1:hover::before {
+  content: "navigate_next";
+}
+/***************************** Information Card CSS *************************************************/
+.info-card {
+  /* display: none !important; */
+  margin-right: 17%;
+  margin-left: 17%;
+  height: 300px;
+  width: 66%;
+  border-radius: 20px;
+  border: 0.5px solid lightgrey;
+  background-color: #e6e0e0;
+}
+
+#header {
+  padding: 0px 16px 24px 16px;
+}
+
+.info-list {
+  margin-left: 20px;
+  line-height: 28px;
+}
+
+#info-link {
+  padding: 0px;
+  margin-top: 20px;
+  border-top: none;
+}
+
+.stream-links {
+  text-decoration: underline;
+  font-weight: bold;
+  color: #62a4c1 !important;
+}
+
+/***************************** Information Card CSS ************************************************/
+
+/***************************** Footer CSS **************************************/
+.page-footer.blue {
+  background-color: #62a4c1 !important;
+}
+
+.footer-copyright.center {
+  background-color: #48668c;
+}
+/***************************** End Footer CSS **********************************/
+
+/**************************** Media Queries *************************************/
+@media only screen and (max-width: 1150px) {
+  nav {
+    height: 115px;
+  }
+
+  #logo-container {
+    width: 100%;
+    text-align: center;
+    /* display: block; */
+    margin-top: 10px;
+    font-size: 80px;
+    margin-left: 0px;
+  }
+  .nav-options {
+    /* position: relative;
+        margin-left: 0;
+        margin-right: 0 !important;
         width: 315px; 
         height: 60px;
         display: block;
-        /* margin-top: 50px; */
-        padding-top: 50px;
-        float: none;
-    }
+        padding-top: 70px; */
+    margin-top: 60px;
+    /* margin-left: 12.5%;
+        margin-right: 12.5%; */
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+
+@media only screen and (max-width: 950px) {
+  .info-card {
+    margin-right: 7.5%;
+    margin-left: 7.5%;
+    width: 85%;
+  }
 }
 
 @media only screen and (max-width: 870px) {
-    #logo-container{
-        width: 100%;
-        text-align: center;
-    }
+  #logo-container {
+    width: 100%;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 3rem;
+  }
+}
+
+@media only screen and (max-width: 750px) {
+  h2 {
+    font-size: 2.5rem;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  h2 {
+    font-size: 2.5rem;
+  }
+
+  .card .card-content {
+    padding: 24px 0px !important;
+  }
+}
+
+@media only screen and (max-width: 580px) {
+  #logo-container {
+    font-size: 70px;
+  }
+
+  .info-card {
+    margin-right: 2.5%;
+    margin-left: 2.5%;
+    width: 95%;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  #logo-container {
+    font-size: 60px;
+  }
+
+  .info-card {
+    margin-right: 2.5%;
+    margin-left: 2.5%;
+    width: 95%;
+    height: 500px;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  h2 {
+    font-size: 2rem;
+  }
 }
 
 @media only screen and (max-width: 412px) {
-    #logo-container{
-        font-size: 50px;
-    }
+  #logo-container {
+    font-size: 50px;
+  }
+}
+
+@media only screen and (max-width: 370px) {
+  .info-card {
+    height: 600px;
+  }
 }
 
 @media only screen and (max-width: 345px) {
-    #logo-container{
-        font-size: 45px;
-    }
+  #logo-container {
+    font-size: 45px;
+  }
+  .info-card {
+    height: 750px;
+  }
 }
 
 @media only screen and (max-width: 330px) {
-    .nav-wrapper container {
-        margin-left: none;
-        margin-right: none;
-    }
-    
-    .nav-options {
-        width: 320px;
-    }
+  .nav-wrapper .container {
+    margin-left: none;
+    margin-right: none;
+  }
+
+  .nav-options {
+    width: 310px;
+  }
 }
 
 @media only screen and (max-width: 308px) {
-    #logo-container{
-        font-size: 40px;
-    }
+  #logo-container {
+    font-size: 40px;
+  }
 }
 
 @media only screen and (max-width: 275px) {
-    #logo-container{
-        font-size: 35px;
-    }
+  #logo-container {
+    font-size: 35px;
+  }
 }
