@@ -16,7 +16,7 @@ $(document).ready(function() {
     }
   });
 
-  $("#loginBtn").on("click", async e => {
+  $("#loginBtn:last").on("click", async e => {
     try {
       const username = $("#username").val();
       const password = $("#password").val();
@@ -32,9 +32,9 @@ $(document).ready(function() {
       location.assign("/overview.html");
       console.log("login succeded!");
     } catch (err) {
-      $("#alert")
+      /*    $("#alert")
         .text(err.response.data.message)
-        .css("color", "red");
+        .css("color", "red"); */
     }
   });
 
