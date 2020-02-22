@@ -8,43 +8,39 @@ $(document).ready(async () => {
   //******************************** */
   $("select").formSelect();
 
-  $("#select-genre").change(function() {
-    // submitted
-    alert("genreId: " + $('#select-genre').val());
+  $("#select-genre").change(function () {
 
-    var genre = $("#select-genre").val();
+    const genre = $("#select-genre").val();
     // getRecommendation
     // convert to dropdownmenu
     $.ajax({
-      url: `localhost:3000/api/movies/recommend/${genre}`,
-      success: function(result) {
+      url: `/api/movies/recommend/${genre}`,
+      success: function (result) {
         // check result length, limit to 10
-        let len = result.length;
+        let len = result.data.total_results;
         if (len > 10) len = 10;
         console.info(result);
 
         // empty movies
-        console.info('overview.js: jquery.movies.empty');
         $("#movies").empty();
-
+        var carouselItemTemplate = '';
         // populate up to 10 movies on card
         for (let i = 0; i < len; i++) {
-          carrouselItemTemplate = `
-          <div class="carousel-item" >
+          carouselItemTemplate = `
+          <div class="carousel-item">
             <div class="card-image">
-              <img src=${result[i].posterPath}> </img>
-            </div>
-            <div class="card-content">
-              <span class="card-title">${result[i].title}</span>
-              <p>${result[i].overview}</p>
-            </div>
-            <div class="card-action">
-
+              <img src="https://image.tmdb.org/t/p/w154${result.data.results[i].poster_path}"></img>
             </div>
           </div>`;
-
-          $("#movies").append(carrouselItemTemplate);
+          $("#movies").append(carouselItemTemplate);
+          $(".carousel-item:last").data("info", result.data.results[i]);
+          console.log(result.data.results[i]);
         }
+        $(".carousel").carousel({
+          dist: 0,
+          shift: 0,
+          padding: 20
+        });
       }
     });
   });
