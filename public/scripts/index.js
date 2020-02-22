@@ -32,9 +32,9 @@ $(document).ready(function() {
       location.assign("/overview.html");
       console.log("login succeded!");
     } catch (err) {
-      /*    $("#alert")
+      $("#alert")
         .text(err.response.data.message)
-        .css("color", "red"); */
+        .css("color", "red");
     }
   });
 
