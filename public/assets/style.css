@@ -1,4 +1,10 @@
+html {
+  height: 100%;
+}
+
 body {
+  height: 100%;
+  width: 100%;
   font-family: "Montserrat", sans-serif;
   background: #13111a;
   background: -webkit-radial-gradient(
@@ -46,6 +52,23 @@ nav {
   border-radius: 15px;
   height: 30px;
 }
+
+.input-field {
+  background-color: #62a4c1;
+  border-radius: 20px;
+  border-bottom: 0px;
+  font-family: "Montserrat Subrayada";
+}
+
+
+.select-wrapper input.select-dropdown{
+  border-bottom: 0px;
+}
+
+.select-wrapper input.select-dropdown:focus{
+  border-bottom: 0px;
+}
+
 
 .section .no-pad-bot {
   padding: 0px;
@@ -115,7 +138,7 @@ h5 {
 /***************************** End Footer CSS **********************************/
 
 /**************************** Media Queries *************************************/
-@media only screen and (max-width: 1150px) {
+@media only screen and (max-width: 1400px) {
   nav {
     height: 115px;
   }
