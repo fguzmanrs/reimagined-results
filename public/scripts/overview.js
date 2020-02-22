@@ -1,6 +1,8 @@
 $(document).ready(async () => {
+  //* Get recent popular movies and render to carousel
   await getAndRenderCarousel();
 
+  //* Click event handler for each movie
   $(".carousel-item .card-image").click(unfoldInfo);
 
   //******************************** */
@@ -45,6 +47,7 @@ $(document).ready(async () => {
     });
   });
 
+  //******************************** */
   //! Event handler : unfold movie detail info
   async function unfoldInfo(e) {
     //1. Get movie info
@@ -74,7 +77,7 @@ $(document).ready(async () => {
                         </div>
                         <div class="card-stacked">
                             <div class="card-content">
-                                <div class = "movie-overview"><p></p></div>
+                                <div class = "movie-overview"><p>${info.overview}</p></div>
                             </div>
                             <!-- <div class="card-action">
                                 <a href="#">This is a link</a>
@@ -101,7 +104,7 @@ $(document).ready(async () => {
       console.log("recent movies: ", recentMovies);
 
       // RENDER carousel with movies
-      refreshCarousel(recentMovies);
+      generateCarouselHTML(recentMovies);
     } catch (err) {
       console.log("error occured!");
       alert(err);
@@ -109,7 +112,7 @@ $(document).ready(async () => {
   }
 
   //! Carousel HTML Generator
-  function refreshCarousel(arr) {
+  function generateCarouselHTML(arr) {
     console.log("🍒 refresh carousel");
 
     // populate 20 movies on card
@@ -119,11 +122,6 @@ $(document).ready(async () => {
          <div class="card-image">
            <img src="https://image.tmdb.org/t/p/w154${movie.poster_path}"></img>
          </div>
-         <div class="card-content">
-           <span class="card-title">${movie.title}</span>
-           <p>${movie.overview}</p>
-         </div>
-         <div class="card-action"></div>
        </div>`;
 
       $("#movies").append(carouselItem);
