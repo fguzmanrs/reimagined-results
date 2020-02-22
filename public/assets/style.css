@@ -44,6 +44,7 @@ nav {
   float: right;
   margin-right: 40px;
   margin-top: 0px;
+  font-weight: bold;
 }
 
 #srch-input {
@@ -162,9 +163,10 @@ h5 {
     margin-top: 60px;
     /* margin-left: 12.5%;
         margin-right: 12.5%; */
-    width: 100%;
+    /* width: 100%; */
     margin-right: auto;
-    margin-left: auto;
+    margin-left: auto; 
+    float: right;
   }
 }
 
