@@ -1,4 +1,10 @@
+html {
+  height: 100%;
+}
+
 body {
+  height: 100%;
+  width: 100%;
   font-family: "Montserrat", sans-serif;
   background: #13111a;
   background: -webkit-radial-gradient(
@@ -38,6 +44,7 @@ nav {
   float: right;
   margin-right: 40px;
   margin-top: 0px;
+  font-weight: bold;
 }
 
 #srch-input {
@@ -46,6 +53,23 @@ nav {
   border-radius: 15px;
   height: 30px;
 }
+
+.input-field {
+  background-color: #62a4c1;
+  border-radius: 20px;
+  border-bottom: 0px;
+  font-family: "Montserrat Subrayada";
+}
+
+
+.select-wrapper input.select-dropdown{
+  border-bottom: 0px;
+}
+
+.select-wrapper input.select-dropdown:focus{
+  border-bottom: 0px;
+}
+
 
 .section .no-pad-bot {
   padding: 0px;
@@ -115,7 +139,7 @@ h5 {
 /***************************** End Footer CSS **********************************/
 
 /**************************** Media Queries *************************************/
-@media only screen and (max-width: 1150px) {
+@media only screen and (max-width: 1400px) {
   nav {
     height: 115px;
   }
@@ -139,9 +163,10 @@ h5 {
     margin-top: 60px;
     /* margin-left: 12.5%;
         margin-right: 12.5%; */
-    width: 100%;
+    /* width: 100%; */
     margin-right: auto;
-    margin-left: auto;
+    margin-left: auto; 
+    float: right;
   }
 }
 
