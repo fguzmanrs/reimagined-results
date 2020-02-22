@@ -45,14 +45,15 @@ exports.getMovieDetail = catchAsync(async (req, res, next) => {
 });
 
 //! Get on demand service providers for specific movie(Netflix, Amazon prime etc)
+//? the data of response calling AJAX from server is different from calling from frontend!!
 // required parameter: movie title
 exports.getProviders = catchAsync(async function(req, res, next) {
-  const movieToSearch = req.params.movieTitle;
+  const movieToSearch = req.params.tmdbId;
 
-  const movies = await axios({
+  const result = await axios({
     method: "GET",
     url:
-      "https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/lookup",
+      "https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/idlookup",
     headers: {
       "content-type": "application/octet-stream",
       "x-rapidapi-host":
@@ -60,31 +61,33 @@ exports.getProviders = catchAsync(async function(req, res, next) {
       "x-rapidapi-key": process.env.UTELLY_API_KEY
     },
     params: {
-      term: movieToSearch,
-      country: "us"
+      country: "US",
+      source_id: movieToSearch,
+      source: "tmdb"
     }
   });
-  console.log("🍒 movie provider: ", movies.data.results);
+  // console.log("🍒 🍒movie provider: ", result);
+  console.log("🍒 result: ", result.data);
 
   // Filter the movies having the exact same name with the search term
   // (* Utelly DB provides a partial search so all similar name's movies are searched.)
-  const filteredMovie = movies.data.results.filter(
-    el => el.name.toLowerCase() === movieToSearch.toLowerCase()
-  );
+  // const filteredMovie = movies.data.results.filter(
+  //   el => el.name.toLowerCase() === movieToSearch.toLowerCase()
+  // );
 
   // Error handling : If there is no data user are searching, create custom error
-  if (filteredMovie.length === 0) {
-    return next(
-      new ErrorFactory(
-        404,
-        "There is no such a data you requested. Please provide with the correct info."
-      )
-    );
-  }
+  // if (result.data.collection.locations.length === 0) {
+  //   return next(
+  //     new ErrorFactory(
+  //       404,
+  //       "There is no such a data you requested. Please provide with the correct info."
+  //     )
+  //   );
+  // }
 
   res.status(200).json({
     status: "success",
-    data: filteredMovie
+    data: result.data.collection.location
   });
 });
 
