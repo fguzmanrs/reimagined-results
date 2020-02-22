@@ -1,5 +1,5 @@
 html {
-  height: 100%;
+  height: 200%;
 }
 
 body {
@@ -105,8 +105,20 @@ h5 {
   background-color: #e6e0e0;
 }
 
+#info-card-1 {
+  overflow: auto;
+}
+
 #header {
   padding: 0px 16px 24px 16px;
+  max-width: 50%;
+}
+
+h2 {
+  margin-top: 20px;
+  font-size: 2.5rem;
+  text-decoration: underline;
+  font-weight: bold;
 }
 
 .info-list {
@@ -118,12 +130,17 @@ h5 {
   padding: 0px;
   margin-top: 20px;
   border-top: none;
+  max-width: 500px;
 }
 
 .stream-links {
   text-decoration: underline;
   font-weight: bold;
   color: #62a4c1 !important;
+}
+
+p{
+  padding-right:5px;
 }
 
 /***************************** Information Card CSS ************************************************/
@@ -170,6 +187,12 @@ h5 {
   }
 }
 
+@media only screen and (max-width: 1200px) {
+  h2 {
+    font-size: 2.0rem;
+  }
+}
+
 @media only screen and (max-width: 950px) {
   .info-card {
     margin-right: 7.5%;
@@ -185,19 +208,19 @@ h5 {
   }
 
   h2 {
-    font-size: 3rem;
+    font-size: 1.5rem;
   }
 }
 
 @media only screen and (max-width: 750px) {
   h2 {
-    font-size: 2.5rem;
+    font-size: 1.5rem;
   }
 }
 
 @media only screen and (max-width: 700px) {
   h2 {
-    font-size: 2.5rem;
+    font-size: 1.5rem;
   }
 
   .card .card-content {
@@ -232,7 +255,7 @@ h5 {
 
 @media only screen and (max-width: 450px) {
   h2 {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 }
 
