@@ -68,10 +68,10 @@ $(document).ready(async () => {
                         <div id = "header">
                             <h2 class="header">${info.title}</h2>
                             <ul class="info-list">
-                                <li>Genre: <div class = "movie-genre">${info.genre_ids}</div></li>
+                                <div class = "movie-genre"><li>Genre: ${info.genre_ids}</li></div>
                                 <!-- <li>Language: <div class = "movie-language"></div></li> --!>
-                                <li>Release Date: <div class = "movie-date">${info.release_date}</div></li>
-                                <li>Rating: <div class = "movie-rating">${info.vote_average}</div></li>
+                                <div class = "movie-date"><li>Release Date: ${info.release_date}</li></div>
+                                <div class = "movie-rating"><li>Rating: ${info.vote_average}</li></div>
                             </ul>
                             <div id = "info-link" class="card-action"></div>
                         </div>
