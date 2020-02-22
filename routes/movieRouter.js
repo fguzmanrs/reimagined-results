@@ -18,7 +18,7 @@ router.get("/:tmdbId", movieController.getMovieDetail);
 
 // 3. Get available providers and link to provider's movie page(NetFlix, Amazon Prime...etc)
 // used api: Utelly > search by title and return available providers & url
-router.get("/providers/:movieTitle", movieController.getProviders);
+router.get("/providers/:tmdbId", movieController.getProviders);
 
 // 4. Recommend movies
 // used api: TMDB - discover > movie discover with user's the most hitted genre, keyword
