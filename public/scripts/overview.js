@@ -61,14 +61,17 @@ $(document).ready(async () => {
     const providers = await getProviders(info.id);
     console.log("🥬 providers arr", providers);
 
-    //3. Render movie detail info
+    //3. Change genre id to genre name
+    info.genreNames = await changeToGenreName(info.genre_ids);
+
+    //4. Render movie detail info
     $("#movieDetail").empty();
 
     const infoHTML = `<div id = "info-card-1" class="card horizontal info-card">
                         <div id = "header">
                             <h2 class="header">${info.title}</h2>
                             <ul class="info-list">
-                                <li>Genre: <div class = "movie-genre">${info.genre_ids}</div></li>
+                                <li>Genre: <div class = "movie-genre">${info.genreNames}</div></li>
                                 <!-- <li>Language: <div class = "movie-language"></div></li> --!>
                                 <li>Release Date: <div class = "movie-date">${info.release_date}</div></li>
                                 <li>Rating: <div class = "movie-rating">${info.vote_average}</div></li>
@@ -158,3 +161,95 @@ $(document).ready(async () => {
     return providersArr;
   }
 });
+
+// Change genre ids to genre names
+async function changeToGenreName(arr) {
+  const genrenNameArr = arr.map(id => {
+    const genreObj = genreList.find(genre => {
+      return genre.id === id;
+    });
+    console.log("🥕 genreObj", genreObj, genreObj.name);
+    return genreObj.name;
+  });
+  console.log("🍊 name arr", genrenNameArr);
+  return `${genrenNameArr}`.split(",").join(", ");
+}
+
+const genreList = [
+  {
+    id: 28,
+    name: "Action"
+  },
+  {
+    id: 12,
+    name: "Adventure"
+  },
+  {
+    id: 16,
+    name: "Animation"
+  },
+  {
+    id: 35,
+    name: "Comedy"
+  },
+  {
+    id: 80,
+    name: "Crime"
+  },
+  {
+    id: 99,
+    name: "Documentary"
+  },
+  {
+    id: 18,
+    name: "Drama"
+  },
+  {
+    id: 10751,
+    name: "Family"
+  },
+  {
+    id: 14,
+    name: "Fantasy"
+  },
+  {
+    id: 36,
+    name: "History"
+  },
+  {
+    id: 27,
+    name: "Horror"
+  },
+  {
+    id: 10402,
+    name: "Music"
+  },
+  {
+    id: 9648,
+    name: "Mystery"
+  },
+  {
+    id: 10749,
+    name: "Romance"
+  },
+  {
+    id: 878,
+    name: "Science Fiction"
+  },
+  {
+    id: 10770,
+    name: "TV Movie"
+  },
+  {
+    id: 53,
+    name: "Thriller"
+  },
+  {
+    id: 10752,
+    name: "War"
+  },
+  {
+    id: 37,
+    name: "Western"
+  }
+];
