@@ -27,7 +27,7 @@
                     placeholder="Password">
                 <i class="material-icons visibility" style=color:grey>visibility_off</i>
             </div>
-            <a class="submit waves-effect waves-light btn" align="center" id="loginBtn">Let me in</a>
+            <a class="submit waves-effect waves-light btn modal-trigger" align="center" id="loginBtn">Let me in</a>
             <!-- <p class="remember_me">
                 <label>
                   <input type="checkbox" name="remember_me" id="remember_me">
@@ -36,6 +36,18 @@
             </p> -->
             <p class="new-account" align="center" id="signupBtn"><a href="/signUp.html">Are you new? Create an Account</p>
         </form>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="login-error modal1" class="modal">
+        <div class="modal-content">
+            <h2>Oh No!</h2>
+            <p>Login error. Please enter your login information again.</p>
+        </div>
+        <div class="modal-footer">
+            <h2><a href="#!" class="modal-close waves-effect btn-flat">Ok</a>
+            </h2>
+        </div>
     </div>
 
     <!--JavaScript-->
