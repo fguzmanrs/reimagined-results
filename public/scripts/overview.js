@@ -3,12 +3,16 @@ $(document).ready(async () => {
   await getAndRenderCarousel();
 
   //* Click event handler for each movie
-  $(".carousel-item .card-image").click(unfoldInfo);
+  $(".carousel-item .card-image").on("click",unfoldInfo);
 
+  // $(".card-image").on("click", function ()
   //******************************** */
   $("select").formSelect();
 
+
+
   $("#select-genre").change(function () {
+
 
     const genre = $("#select-genre").val();
     // getRecommendation
@@ -36,6 +40,9 @@ $(document).ready(async () => {
           $(".carousel-item:last").data("info", result.data.results[i]);
           console.log(result.data.results[i]);
         }
+
+        $(".card-image").on("click", unfoldInfo);
+
         $(".carousel").carousel({
           dist: 0,
           shift: 0,
