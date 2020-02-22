@@ -88,11 +88,17 @@ $(document).ready(async () => {
     $("#movieDetail").append(infoHTML);
 
     // Render on demand providers link
-    for (provider of providers) {
-      // Generate HTML
-      const providersHTML = `<a class = "stream-links" id = ${provider.display_name} href=${provider.url} target="_blank">${provider.display_name}</a>`;
+    if (providers.length > 0) {
+      for (provider of providers) {
+        // Generate HTML
+        const providersHTML = `<a class = "stream-links" id = ${provider.display_name} href=${provider.url} target="_blank">${provider.display_name}</a>`;
 
-      $(".card-action").append(providersHTML);
+        $(".card-action").append(providersHTML);
+      }
+    } else {
+      $(".card-action").append(
+        "<p class='no-streaming'>No streaming available</p>"
+      );
     }
   }
 
