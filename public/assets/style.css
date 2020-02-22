@@ -105,7 +105,7 @@ h5 {
 /***************************** End Footer CSS **********************************/
 
 /**************************** Media Queries *************************************/
-@media only screen and (max-width: 1050px) {
+@media only screen and (max-width: 1150px) {
     nav {
         height: 115px;
     }
